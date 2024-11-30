@@ -1,3 +1,4 @@
+<?php inclued('dbconn.php') ?>
 <!DOCTYPE html> 
 <html>
 <head>

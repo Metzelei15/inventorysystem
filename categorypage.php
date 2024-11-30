@@ -1,8 +1,8 @@
-<?php include('dbconn.php') ?>
+<?php include('dbconn.php')?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Product</title>
+	<title>Category</title>
 	<style>
 		table, th, td {
 			border: 1px solid;
@@ -11,24 +11,20 @@
 </head>
 <body>
 	<?php
-		$query = "SELECT * FROM `producttable`;";
+		$query = "SELECT * FROM `categorytable`;";
 		$result = mysqli_query($conn, $query);
 
 		if($result->num_rows > 0) {
 			echo "<table>
-					<tr><th>PRODUCT ID
+					<tr><th>CATEGORY ID
 					</th><th>NAME
 					</th><th>DESCRIPTION
-					</th><th>QUANTITY
-					</th><th>CATEGORY
 					</th></tr>";
 					// output data of each row
 					while($row = $result->fetch_assoc()) {
-				    	echo"<tr><td>".$row["INTprodid"].
-				    		"</td><td>".$row["STRprodname"].
-				    		"</td><td>".$row["STRproddesc"].
-				    		"</td><td>".$row["INTprodquan"].
-				    		"</td><td>".$row["INTcategoryid"].
+				    	echo"<tr><td>".$row["INTcategoryid"].
+				    		"</td><td>".$row["STRcategoryname"].
+				    		"</td><td>".$row["STRcategorydesc"].
 				    		"</td><tr>";
 					}
 			echo "</table>";
