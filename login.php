@@ -13,7 +13,9 @@
 	if (isset($_POST["admin"])){
 		$_SESSION["role"] = "admin";
 	}
-
+	if (isset($_POST["reset"])){
+		unset($_SESSION["role"]);
+	}
 	if (isset($_POST["username"]) && isset($_POST["password"])){
 		if ($_POST["username"]=="1234" && $_POST["password"]=="password"){
 				echo "<script>document.location.href='staffhomepage.php';</script>";
@@ -37,6 +39,9 @@
 
 	<label for="admin">Click for Admin</label>
 	<input type="submit" name="admin">
+
+	<label for="admin">Reset Session Key</label>
+	<input type="submit" name="reset">
 </form>
 <?php
 	if (isset($_SESSION["role"])) {
