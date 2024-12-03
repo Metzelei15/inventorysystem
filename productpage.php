@@ -6,7 +6,7 @@
 </head>
 <body>
 	<?php
-		 $query = "SELECT * FROM `Product`;";
+		 $query = "SELECT * FROM `producttable`;";
 	?>
 	<table>
 		<tr>
@@ -15,9 +15,7 @@
 			<th>Stock</th>
 		</tr>
 		<tr>
-			<td>placeholder1</td>
-			<td>placeholder2</td>
-			<td>placeholder3</td>
+			<td><?php echo "<p>$query</p>";?></td>
 		</tr>
 	</table>
 </body>

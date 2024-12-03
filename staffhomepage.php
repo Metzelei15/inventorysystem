@@ -55,6 +55,7 @@
 	#content {
 		place-items: center;
 	}
+
 </style>
 </head>
 <?php
@@ -78,52 +79,65 @@
 		if (isset($_GET['section'])) {
 			switch ($_GET['section']) {
 				case 'Product':
-					echo "You are viewing the Product section.";
+					$query = "SELECT `INTprodid`, `STRprodname`, `INTprodquan` FROM `producttable`;";
+    				$result = mysqli_query($conn, $query);
 					echo "
 						<table>
 							<tr>
 								<th>ID</th>
 								<th>Name</th>
 								<th>Stock</th>
-							</tr>
+							</tr>";
+					if ($result->num_rows > 0) {
+						while ($row = $result->fetch_assoc()) {
+							echo "
+								<tr>
+									<td>" . $row['INTprodid'] . "</td>
+									<td>" . $row['STRprodname'] . "</td>
+									<td>" . $row['INTprodquan'] . "</td>
+								</tr>";
+						}
+					} else {
+						echo "
 							<tr>
-								<td>placeholder1</td>
-								<td>placeholder2</td>
-								<td>placeholder3</td>
-							</tr>
-						</table>";
+								<td colspan='3'>No products found</td>
+							</tr>";
+					}
+					echo "</table>";
 					break;
 				case 'Material':
-					echo "You are viewing the Material section.";
+					$query = "SELECT `INTmatid`, `STRmatname`, `INTmatquan` FROM `materialtable`;";
+    				$result = mysqli_query($conn, $query);
 					echo "
 						<table>
 							<tr>
 								<th>ID</th>
 								<th>Name</th>
 								<th>Stock</th>
-							</tr>
+							</tr>";
+					if ($result->num_rows > 0) {
+						while ($row = $result->fetch_assoc()) {
+							echo "
+								<tr>
+									<td>" . $row['INTmatid'] . "</td>
+									<td>" . $row['STRmatname'] . "</td>
+									<td>" . $row['INTmatquan'] . "</td>
+								</tr>";
+						}
+					} else {
+						echo "
 							<tr>
-								<td>placeholder1</td>
-								<td>placeholder2</td>
-								<td>placeholder3</td>
-							</tr>
-						</table>";
+								<td colspan='3'>No products found</td>
+							</tr>";
+					}
+					echo "</table>";
 					break;
 				case 'Report':
 					echo "You are viewing the Report section.";
 					echo "
-						<table>
-							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Stock</th>
-							</tr>
-							<tr>
-								<td>placeholder1</td>
-								<td>placeholder2</td>
-								<td>placeholder3</td>
-							</tr>
-						</table>";
+					<div style='text-align: center;'>
+						<button onClick=alert('WalapangReport')>Generate Report</button>
+					</div>";
 					break;
 				default:
 					echo "Please select a section.";
