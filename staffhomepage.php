@@ -16,64 +16,171 @@
 <html>
 <head>
 	<title>Staff Dashboard</title>
-<style>
-	ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		width: 10%;
-		background-color: #f1f1f1;
-		position: fixed;
-		height: 100%;
-		overflow: auto;
-	}
+	<style>
+		:root {
+			--primary-green: #04AA6D;
+			--primary-green-hover: #038c57;
+			--text-color-dark: #333;
+			--text-color-light: #fff;
+			--border-color: #ddd;
+		}
 
-	li a {
-		display: block;
-		color: #000;
-		padding: 8px 16px;
-		text-decoration: none;
-	}
+		/* Sidebar Styles */
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			width: 10%;
+			background-color: #f1f1f1;
+			position: fixed;
+			height: 100%;
+			overflow: auto;
+		}
 
-	li a.active {
-	  	background-color: #04AA6D;
-	  	color: white;
-	}
+		li a {
+			display: block;
+			color: #000;
+			padding: 8px 16px;
+			text-decoration: none;
+		}
 
-	li a:hover:not(.active) {
-	  	background-color: #555;
-	  	color: white;
-	}
+		li a.active {
+			background-color: var(--primary-green);
+			color: var(--text-color-light);
+		}
 
-	form input, form button {
-		margin: 10px 0;
-		display: block;
-		color: #000;
-		padding: 8px 16px;
-	}
+		li a:hover:not(.active) {
+			background-color: #555;
+			color: var(--text-color-light);
+		}
 
-	#content {
-		margin-left: 12%;
-		padding: 10px;
-	}
+		/* Form Styles */
+		form input, form button, input[type='text'], input[type='number'], select {
+			margin: 10px 0;
+			display: block;
+			padding: 8px 16px;
+			border: 1px solid var(--border-color);
+			border-radius: 4px;
+			font-size: 14px;
+			color: var(--text-color-light);
+		}
 
-	table {
-		width: 80%;
-		border-collapse: collapse;
-		margin: 20px auto;
-	}
+		input[type='text'],
+		input[type='number'],
+		select {
+			width: 100%;
+			margin-bottom: 15px;
+			background-color: #fff;
+		}
 
-	table th, table td {
-		border: 1px solid #ddd;
-		padding: 8px;
-		text-align: center;
-	}
+		button {
+			background-color: var(--primary-green);
+			color: var(--text-color-light);
+			border: none;
+			padding: 10px;
+			width: 100%;
+			cursor: pointer;
+			font-size: 16px;
+			border-radius: 4px;
+			transition: background-color 0.3s;
+		}
 
-	table th {
-		background-color: #04AA6D;
-		color: white;
-	}
-</style>
+		button:hover {
+			background-color: var(--primary-green-hover);
+		}
+
+		/* Main Content */
+		#content {
+			margin-left: 12%;
+			padding: 10px;
+		}
+
+		/* Table Styles */
+		table {
+			width: 80%;
+			border-collapse: collapse;
+			margin: 20px auto;
+		}
+
+		table th, table td {
+			border: 1px solid var(--border-color);
+			padding: 8px;
+			text-align: center;
+		}
+
+		table th {
+			background-color: var(--primary-green);
+			color: var(--text-color-light);
+		}
+
+		/* Form Container to Arrange Forms Side by Side */
+		.form-container {
+			display: flex;
+			justify-content: space-between;
+			gap: 30px;
+			margin-top: 30px;
+		}
+
+		/* Styling for the Add and Delete Product Boxes */
+		.form-box {
+			background-color: var(--primary-green);
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 20px;
+			width: 45%;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			color: var(--text-color-light);
+		}
+
+		.form-box h2 {
+			text-align: center;
+		}
+
+		/* Label styling */
+		label {
+			display: block;
+			font-size: 14px;
+			margin-bottom: 5px;
+			color: var(--text-color-dark);
+		}
+
+		/* Responsive Styles for Small Screens */
+		@media (max-width: 768px) {
+			.form-container {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.form-box {
+				width: 80%;
+			}
+		}
+
+		.small-button {
+			background-color: #04AA6D;
+			color: white;
+			padding: 5px; 
+			font-size: 12px;     
+			width: 100px;        
+			height: 30px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		.small-button:hover {
+			background-color: #038c57;
+		}
+
+		/* Align the buttons side by side */
+		.button-container {
+			text-align: center;
+		}
+
+	</style>
 </head>
 <?php
 	if (isset($_POST["logout"])){
@@ -88,7 +195,7 @@
 		<li><a href="?section=Product" class="<?= isset($_GET['section']) && $_GET['section'] === 'Product' ? 'active' : '' ?>">Product</a></li>
 		<li><a href="?section=Material" class="<?= isset($_GET['section']) && $_GET['section'] === 'Material' ? 'active' : '' ?>">Material</a></li>
 		<li><a href="?section=Report" class="<?= isset($_GET['section']) && $_GET['section'] === 'Report' ? 'active' : '' ?>">Report</a></li>
-		<form method="POST"><input type="submit" name="logout" value="Logout"></form>
+		<form method="POST"><button class="small-button" type="submit" name="logout">Logout</button></form>
 	</ul>
 	
 	<div id="content">
@@ -97,8 +204,8 @@
 			switch ($_GET['section']) {
 				case 'Product':
 					$search = isset($_GET['search']) ? trim($_GET['search']) : '';
-					$query = "SELECT `INTprodid`, `STRprodname`, `INTprodquan` FROM `producttable`";
-
+					$query = "SELECT `INTprodid`, `STRprodname`, `STRproddesc`, `INTprodquan` FROM `producttable`";
+				
 					if ($search !== '') {
 						$search = $conn->real_escape_string($search);
 						if (is_numeric($search)) {
@@ -107,36 +214,88 @@
 							$query .= " WHERE `STRprodname` LIKE '%$search%'";
 						}
 					}
-
+				
 					$result = mysqli_query($conn, $query);
-
+				
 					echo "
 						<form method='GET' style='text-align: center;'>
 							<input type='hidden' name='section' value='Product'>
 							<input type='text' id='search' name='search' value='" . htmlspecialchars($search) . "' placeholder='Enter Product ID or Name'>
-							<button type='submit'>Search</button>
+							<button class='small-button' type='submit'>Search</button>
 						</form>";
-
+				
 					echo "<table>
 							<tr>
 								<th>ID</th>
 								<th>Name</th>
+								<th>Description</th>  <!-- Added column for Description -->
 								<th>Stock</th>
 							</tr>";
-
+				
 					if ($result && $result->num_rows > 0) {
 						while ($row = $result->fetch_assoc()) {
 							echo "
 								<tr>
 									<td>" . htmlspecialchars($row['INTprodid']) . "</td>
 									<td>" . htmlspecialchars($row['STRprodname']) . "</td>
+									<td>" . htmlspecialchars($row['STRproddesc']) . "</td>  <!-- Displaying the product description -->
 									<td>" . htmlspecialchars($row['INTprodquan']) . "</td>
 								</tr>";
 						}
 					} else {
-						echo "<tr><td colspan='3'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No products found") . "</td></tr>";
+						echo "<tr><td colspan='4'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No products found") . "</td></tr>";
 					}
+				
 					echo "</table>";
+					echo "
+						<div class='button-container'>
+							<button class='small-button' type='button' onclick='toggleForm(\"add-product-form\")'>Add Product</button>
+							<button class='small-button' type='button' onclick='toggleForm(\"delete-product-form\")'>Delete Product</button>
+						</div>";
+					echo "
+						<div id='add-product-form' style='display: none;'>
+							<form method='POST' action='addproduct.php'>
+								<h2>Add New Product</h2>
+								<label for='prodname'>Product Name:</label>
+								<input type='text' id='prodname' name='prodname' required>
+								<label for='proddesc'>Description:</label>
+								<input type='text' id='proddesc' name='proddesc' required>
+								<label for='prodquan'>Quantity:</label>
+								<input type='number' id='prodquan' name='prodquan' required>
+								<label for='category'>Category:</label>
+								<select id='category' name='categoryid' required>";
+
+					$catQuery = "SELECT `INTcategoryid`, `STRcategoryname` FROM `categorytable`";
+					$catResult = mysqli_query($conn, $catQuery);
+					while ($catRow = mysqli_fetch_assoc($catResult)) {
+						echo "<option value='" . $catRow['INTcategoryid'] . "'>" . $catRow['STRcategoryname'] . "</option>";
+					}
+					echo "
+								</select>
+								<button type='submit' name='add_product'>Add Product</button>
+							</form>
+						</div>
+					";
+
+					echo "
+						<div id='delete-product-form' style='display: none;'>
+							<form method='POST' action='deleteproduct.php'>
+								<h2>Delete Product</h2>
+								<label for='productid'>Product ID:</label>
+								<input type='text' id='productid' name='productid' required>
+								<label for='category'>Category:</label>
+								<select id='category' name='categoryid' required>";
+
+					$catResult = mysqli_query($conn, $catQuery);
+					while ($catRow = mysqli_fetch_assoc($catResult)) {
+						echo "<option value='" . $catRow['INTcategoryid'] . "'>" . $catRow['STRcategoryname'] . "</option>";
+					}
+					echo "
+								</select>
+								<button type='submit' name='del_product'>Delete Product</button>
+							</form>
+						</div>
+					";
 					break;
 
 				case 'Material':
@@ -195,5 +354,16 @@
 		}
 		?>
 	</div>
+
+	<script>
+		function toggleForm(formId) {
+			var form = document.getElementById(formId);
+			if (form.style.display === 'none' || form.style.display === '') {
+				form.style.display = 'block';  // Show the form
+			} else {
+				form.style.display = 'none';  // Hide the form
+			}
+		}
+	</script>
 </body>
 </html>
