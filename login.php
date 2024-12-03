@@ -85,10 +85,7 @@
         button:hover {
             background-color: #45a049;
         }
-        .role-message {
-            margin-top: 15px;
-            font-size: 14px;
-        }
+		
         .error-message {
             color: red;
             font-size: 14px;
@@ -110,17 +107,6 @@
 
         <button type="submit">Login</button>
     </form>
-
-    <!-- Display Role -->
-    <div class="role-message">
-        <?php
-        if (isset($_SESSION["role"])) {
-            echo "Role: " . $_SESSION["role"];
-        } else {
-            echo "Role is not set.";
-        }
-        ?>
-    </div>
 
     <!-- Display Error Message if credentials are incorrect -->
     <?php
