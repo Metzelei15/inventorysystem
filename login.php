@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('dbconn.php'); // Assume this includes a PDO instance, e.g., $pdo
+include('dbconn.php');
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];

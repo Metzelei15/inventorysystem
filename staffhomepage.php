@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php 
 	include('dbconn.php');
 	session_start();
@@ -12,6 +13,9 @@
 		echo "You have clicked on the " . $_GET['section'] . " section.";
 	}
 ?>
+=======
+<?php include('dbconn.php') ?>
+>>>>>>> aaa296bd5c2ab9277df493f040fbb5257eccd3f3
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +66,7 @@
 			border: 1px solid var(--border-color);
 			border-radius: 4px;
 			font-size: 14px;
-			color: var(--text-color-light);
+			color: var(--text-color-dark);
 		}
 
 		input[type='text'],
