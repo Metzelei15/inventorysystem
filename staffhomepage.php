@@ -190,180 +190,142 @@
 	}
 ?>
 <body>
-	<ul>
-		<li>Dashboard</li>
-		<li><a href="?section=Product" class="<?= isset($_GET['section']) && $_GET['section'] === 'Product' ? 'active' : '' ?>">Product</a></li>
-		<li><a href="?section=Material" class="<?= isset($_GET['section']) && $_GET['section'] === 'Material' ? 'active' : '' ?>">Material</a></li>
-		<li><a href="?section=Report" class="<?= isset($_GET['section']) && $_GET['section'] === 'Report' ? 'active' : '' ?>">Report</a></li>
-		<form method="POST"><button class="small-button" type="submit" name="logout">Logout</button></form>
-	</ul>
-	
-	<div id="content">
-		<?php
-		if (isset($_GET['section'])) {
-			switch ($_GET['section']) {
-				case 'Product':
-					$search = isset($_GET['search']) ? trim($_GET['search']) : '';
-					$query = "SELECT `INTprodid`, `STRprodname`, `STRproddesc`, `INTprodquan` FROM `producttable`";
-				
-					if ($search !== '') {
-						$search = $conn->real_escape_string($search);
-						if (is_numeric($search)) {
-							$query .= " WHERE `INTprodid` = '$search'";
-						} else {
-							$query .= " WHERE `STRprodname` LIKE '%$search%'";
-						}
-					}
-				
-					$result = mysqli_query($conn, $query);
-				
-					echo "
-						<form method='GET' style='text-align: center;'>
-							<input type='hidden' name='section' value='Product'>
-							<input type='text' id='search' name='search' value='" . htmlspecialchars($search) . "' placeholder='Enter Product ID or Name'>
-							<button class='small-button' type='submit'>Search</button>
-						</form>";
-				
-					echo "<table>
-							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Description</th>  <!-- Added column for Description -->
-								<th>Stock</th>
-							</tr>";
-				
-					if ($result && $result->num_rows > 0) {
-						while ($row = $result->fetch_assoc()) {
-							echo "
-								<tr>
-									<td>" . htmlspecialchars($row['INTprodid']) . "</td>
-									<td>" . htmlspecialchars($row['STRprodname']) . "</td>
-									<td>" . htmlspecialchars($row['STRproddesc']) . "</td>  <!-- Displaying the product description -->
-									<td>" . htmlspecialchars($row['INTprodquan']) . "</td>
-								</tr>";
-						}
-					} else {
-						echo "<tr><td colspan='4'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No products found") . "</td></tr>";
-					}
-				
-					echo "</table>";
-					echo "
-						<div class='button-container'>
-							<button class='small-button' type='button' onclick='toggleForm(\"add-product-form\")'>Add Product</button>
-							<button class='small-button' type='button' onclick='toggleForm(\"delete-product-form\")'>Delete Product</button>
-						</div>";
-					echo "
-						<div id='add-product-form' style='display: none;'>
-							<form method='POST' action='addproduct.php'>
-								<h2>Add New Product</h2>
-								<label for='prodname'>Product Name:</label>
-								<input type='text' id='prodname' name='prodname' required>
-								<label for='proddesc'>Description:</label>
-								<input type='text' id='proddesc' name='proddesc' required>
-								<label for='prodquan'>Quantity:</label>
-								<input type='number' id='prodquan' name='prodquan' required>
-								<label for='category'>Category:</label>
-								<select id='category' name='categoryid' required>";
+    <ul>
+        <li>Dashboard</li>
+        <li><a href="?section=Product" class="<?= isset($_GET['section']) && $_GET['section'] === 'Product' ? 'active' : '' ?>">Product</a></li>
+        <li><a href="?section=Material" class="<?= isset($_GET['section']) && $_GET['section'] === 'Material' ? 'active' : '' ?>">Material</a></li>
+        <li><a href="?section=Report" class="<?= isset($_GET['section']) && $_GET['section'] === 'Report' ? 'active' : '' ?>">Report</a></li>
+        <form method="POST"><button class="small-button" type="submit" name="logout">Logout</button></form>
+    </ul>
 
-					$catQuery = "SELECT `INTcategoryid`, `STRcategoryname` FROM `categorytable`";
-					$catResult = mysqli_query($conn, $catQuery);
-					while ($catRow = mysqli_fetch_assoc($catResult)) {
-						echo "<option value='" . $catRow['INTcategoryid'] . "'>" . $catRow['STRcategoryname'] . "</option>";
-					}
-					echo "
-								</select>
-								<button type='submit' name='add_product'>Add Product</button>
-							</form>
-						</div>
-					";
+    <div id="content">
+        <?php
+        include('dbconn.php');
 
-					echo "
-						<div id='delete-product-form' style='display: none;'>
-							<form method='POST' action='deleteproduct.php'>
-								<h2>Delete Product</h2>
-								<label for='productid'>Product ID:</label>
-								<input type='text' id='productid' name='productid' required>
-								<label for='category'>Category:</label>
-								<select id='category' name='categoryid' required>";
+        if (isset($_GET['section'])) {
+            switch ($_GET['section']) {
+                case 'Product':
+                    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+                    $query = "SELECT `INTprodid`, `STRprodname`, `STRproddesc`, `INTprodquan` FROM `producttable`";
+                    
+                    if ($search !== '') {
+                        if (is_numeric($search)) {
+                            $query .= " WHERE `INTprodid` = :search";
+                        } else {
+                            $query .= " WHERE `STRprodname` LIKE :search";
+                        }
+                    }
 
-					$catResult = mysqli_query($conn, $catQuery);
-					while ($catRow = mysqli_fetch_assoc($catResult)) {
-						echo "<option value='" . $catRow['INTcategoryid'] . "'>" . $catRow['STRcategoryname'] . "</option>";
-					}
-					echo "
-								</select>
-								<button type='submit' name='del_product'>Delete Product</button>
-							</form>
-						</div>
-					";
-					break;
+                    $stmt = $conn->prepare($query);
+                    if ($search !== '') {
+                        $stmt->bindValue(':search', is_numeric($search) ? $search : "%$search%", PDO::PARAM_STR);
+                    }
+                    $stmt->execute();
 
-				case 'Material':
-					$search = isset($_GET['search']) ? trim($_GET['search']) : '';
-					$query = "SELECT `INTmatid`, `STRmatname`, `INTmatquan` FROM `materialtable`";
+                    echo "
+                        <form method='GET' style='text-align: center;'>
+                            <input type='hidden' name='section' value='Product'>
+                            <input type='text' id='search' name='search' value='" . htmlspecialchars($search) . "' placeholder='Enter Product ID or Name'>
+                            <button class='small-button' type='submit'>Search</button>
+                        </form>";
 
-					if ($search !== '') {
-						$search = $conn->real_escape_string($search);
-						if (is_numeric($search)) {
-							$query .= " WHERE `INTmatid` = '$search'";
-						} else {
-							$query .= " WHERE `STRmatname` LIKE '%$search%'";
-						}
-					}
+                    echo "<table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Stock</th>
+                            </tr>";
 
-					$result = mysqli_query($conn, $query);
+                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    if (count($results) > 0) {
+                        foreach ($results as $row) {
+                            echo "
+                                <tr>
+                                    <td>" . htmlspecialchars($row['INTprodid']) . "</td>
+                                    <td>" . htmlspecialchars($row['STRprodname']) . "</td>
+                                    <td>" . htmlspecialchars($row['STRproddesc']) . "</td>
+                                    <td>" . htmlspecialchars($row['INTprodquan']) . "</td>
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No products found") . "</td></tr>";
+                    }
 
-					echo "
-						<form method='GET' style='text-align: center;'>
-							<input type='hidden' name='section' value='Material'>
-							<input type='text' id='search' name='search' value='" . htmlspecialchars($search) . "' placeholder='Enter Material ID or Name'>
-							<button type='submit'>Search</button>
-						</form>";
+                    echo "</table>";
+                    break;
 
-					echo "<table>
-							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Stock</th>
-							</tr>";
+                case 'Material':
+                    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+                    $query = "SELECT `INTmatid`, `STRmatname`, `INTmatquan` FROM `materialtable`";
 
-					if ($result && $result->num_rows > 0) {
-						while ($row = $result->fetch_assoc()) {
-							echo "
-								<tr>
-									<td>" . htmlspecialchars($row['INTmatid']) . "</td>
-									<td>" . htmlspecialchars($row['STRmatname']) . "</td>
-									<td>" . htmlspecialchars($row['INTmatquan']) . "</td>
-								</tr>";
-						}
-					} else {
-						echo "<tr><td colspan='3'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No materials found") . "</td></tr>";
-					}
-					echo "</table>";
-					break;
+                    if ($search !== '') {
+                        if (is_numeric($search)) {
+                            $query .= " WHERE `INTmatid` = :search";
+                        } else {
+                            $query .= " WHERE `STRmatname` LIKE :search";
+                        }
+                    }
 
-				case 'Report':
-					echo "<div style='text-align: center;'>
-						<button onClick=alert('WalapangReport')>Generate Report</button>
-					</div>";
-					break;
+                    $stmt = $conn->prepare($query);
+                    if ($search !== '') {
+                        $stmt->bindValue(':search', is_numeric($search) ? $search : "%$search%", PDO::PARAM_STR);
+                    }
+                    $stmt->execute();
 
-				default:
-					echo "Please select a section.";
-			}
-		}
-		?>
-	</div>
+                    echo "
+                        <form method='GET' style='text-align: center;'>
+                            <input type='hidden' name='section' value='Material'>
+                            <input type='text' id='search' name='search' value='" . htmlspecialchars($search) . "' placeholder='Enter Material ID or Name'>
+                            <button type='submit'>Search</button>
+                        </form>";
 
-	<script>
-		function toggleForm(formId) {
-			var form = document.getElementById(formId);
-			if (form.style.display === 'none' || form.style.display === '') {
-				form.style.display = 'block';  // Show the form
-			} else {
-				form.style.display = 'none';  // Hide the form
-			}
-		}
-	</script>
+                    echo "<table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Stock</th>
+                            </tr>";
+
+                    $results = $conn->fetchAll(PDO::FETCH_ASSOC);
+                    if (count($results) > 0) {
+                        foreach ($results as $row) {
+                            echo "
+                                <tr>
+                                    <td>" . htmlspecialchars($row['INTmatid']) . "</td>
+                                    <td>" . htmlspecialchars($row['STRmatname']) . "</td>
+                                    <td>" . htmlspecialchars($row['INTmatquan']) . "</td>
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='3'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No materials found") . "</td></tr>";
+                    }
+
+                    echo "</table>";
+                    break;
+
+                case 'Report':
+                    echo "<div style='text-align: center;'>
+                        <button onClick=alert('WalapangReport')>Generate Report</button>
+                    </div>";
+                    break;
+
+                default:
+                    echo "Please select a section.";
+            }
+        }
+        ?>
+    </div>
+
+    <script>
+        function toggleForm(formId) {
+            var form = document.getElementById(formId);
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';  // Show the form
+            } else {
+                form.style.display = 'none';  // Hide the form
+            }
+        }
+    </script>
 </body>
 </html>

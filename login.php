@@ -1,39 +1,49 @@
-<?php 
-	session_start();
-	include('dbconn.php');
+<?php
+session_start();
+include('dbconn.php'); // Assume this includes a PDO instance, e.g., $pdo
 
-	if (isset($_POST['username']) && isset($_POST['password'])) {
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		
-		// Sanitize inputs to prevent SQL injection
-		$username = mysqli_real_escape_string($conn, $username);
-		$password = mysqli_real_escape_string($conn, $password);
-		
-		// Query to join `account` and `accountrole` tables
-		$query = "
-			SELECT a.`INTaccntid`, ar.`STRaccntrole`
-			FROM `account` a
-			JOIN `account role` ar ON a.`INTaccntid` = ar.`INTaccntid`
-			WHERE a.`STRusername` = '$username' AND a.`INTpassword` = '$password'
-		";
-		$result = mysqli_query($conn, $query);
-		
-		if (mysqli_num_rows($result) > 0) {
-			$row = mysqli_fetch_assoc($result);
-			
-			$_SESSION["role"] = $row['STRaccntrole'];
-			$_SESSION["accntid"] = $row['INTaccntid'];
-			
-			// Redirect based on role
-			if ($row['STRaccntrole'] == 'admin') {
-				echo "<script>document.location.href='adminhomepage.php';</script>";
-			} else if ($row['STRaccntrole'] == 'staff') {
-				echo "<script>document.location.href='staffhomepage.php';</script>";
-			}
-		}
-	}
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    try {
+        // Prepare the query to join `account` and `account role` tables
+        $query = "
+            SELECT a.`INTaccntid`, ar.`STRaccntrole`
+            FROM `account` a
+            JOIN `account role` ar ON a.`INTaccntid` = ar.`INTaccntid`
+            WHERE a.`STRusername` = :username AND a.`INTpassword` = :password
+        ";
+
+        // Use prepared statements to prevent SQL injection
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $_SESSION["role"] = $row['STRaccntrole'];
+            $_SESSION["accntid"] = $row['INTaccntid'];
+
+            // Redirect based on role
+            if ($row['STRaccntrole'] == 'admin') {
+                echo "<script>document.location.href='adminhomepage.php';</script>";
+            } elseif ($row['STRaccntrole'] == 'staff') {
+                echo "<script>document.location.href='staffhomepage.php';</script>";
+            }
+        } else {
+            // Handle invalid credentials
+            echo "<script>alert('Invalid username or password');</script>";
+        }
+    } catch (PDOException $e) {
+        // Handle potential errors
+        echo "<script>alert('An error occurred: " . htmlspecialchars($e->getMessage()) . "');</script>";
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html>
