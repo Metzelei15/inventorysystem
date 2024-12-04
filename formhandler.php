@@ -4,7 +4,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	$STRprodname = htmlspecialchars($_POST["STRprodname"]);
 	$STRproddesc = htmlspecialchars($_POST["STRproddesc"]);
 	$INTcategoryid = htmlspecialchars($_POST["INTcategoryid"]);
-
+	echo $INTcategoryid;
+	echo $STRcategoryname;
 	try {
 		require_once "dbconn.php";
 		$query = "INSERT INTO producttable(STRprodname, STRproddesc, INTcategoryid) 
@@ -12,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		$stmt = $conn->prepare($query);
 
-		$stmt ->bindParam(":STRprodname, $STRprodname");
-		$stmt ->bindParam(":STRproddesc, $STRproddesc");
-		$stmt ->bindParam(":INTcategoryid, $INTcategoryid");
+		$stmt ->bindParam(":STRprodname", $STRprodname);
+		$stmt ->bindParam(":STRproddesc", $STRproddesc);
+		$stmt ->bindParam(":INTcategoryid", $INTcategoryid);
 
 		$stmt->execute();
 
@@ -29,5 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			die("Query failed: " . $e->getMessage());
 		}
 	} else {
-		header("Location: ../inventorysystem/productadd.php");
+		/**this shit throws an error sa browser kaya naka comment to**/
+		/**header("Location: ../inventorysystem/productadd.php");**/
 	}
