@@ -116,7 +116,6 @@
 		/* Form Container to Arrange Forms Side by Side */
 		.form-container {
 			display: flex;
-			justify-content: space-between;
 			gap: 30px;
 			margin-top: 30px;
 		}
@@ -340,7 +339,7 @@
                         <form method='GET' style='text-align: center;'>
                             <input type='hidden' name='section' value='Material'>
                             <input type='text' id='search' name='search' value='" . htmlspecialchars($search) . "' placeholder='Enter Material ID or Name'>
-                            <button type='submit'>Search</button>
+                            <button class='small-button' type='submit'>Search</button>
                         </form>";
 
                     echo "<table>
@@ -350,19 +349,33 @@
                                 <th>Stock</th>
                             </tr>";
 
-                    $results = $conn->fetchAll(PDO::FETCH_ASSOC);
-                    if (count($results) > 0) {
-                        foreach ($results as $row) {
-                            echo "
-                                <tr>
-                                    <td>" . htmlspecialchars($row['INTmatid']) . "</td>
-                                    <td>" . htmlspecialchars($row['STRmatname']) . "</td>
-                                    <td>" . htmlspecialchars($row['INTmatquan']) . "</td>
-                                </tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='3'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No materials found") . "</td></tr>";
-                    }
+							if (isset($search)) {
+								try {
+									$query = "SELECT `INTmatid`, `STRmatname`, `INTmatquan` FROM `materialtable` WHERE `STRmatname` LIKE :search";
+									$stmt = $conn->prepare($query);
+							
+									// Bind the search term to the placeholder
+									$stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+				
+									$stmt->execute();
+									$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+					
+									if (count($results) > 0) {
+										foreach ($results as $row) {
+											echo "
+												<tr>
+													<td>" . htmlspecialchars($row['INTmatid']) . "</td>
+													<td>" . htmlspecialchars($row['STRmatname']) . "</td>
+													<td>" . htmlspecialchars($row['INTmatquan']) . "</td>
+												</tr>";
+										}
+									} else {
+										echo "<tr><td colspan='3'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No materials found") . "</td></tr>";
+									}
+								} catch (PDOException $e) {
+									echo "<tr><td colspan='3'>Error: " . $e->getMessage() . "</td></tr>";
+								}
+							}
 
                     echo "</table>";
                     break;

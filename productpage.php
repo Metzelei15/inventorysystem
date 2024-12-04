@@ -10,32 +10,41 @@
 	</style>
 </head>
 <body>
-	<?php
-		$query = "SELECT * FROM `producttable`;";
-		$result = mysqli_query($conn, $query);
+<?php
+	$query = "SELECT * FROM `producttable`";
+	$stmt = $conn->prepare($query);
 
-		if($result->num_rows > 0) {
-			echo "<table>
-					<tr><th>PRODUCT ID
-					</th><th>NAME
-					</th><th>DESCRIPTION
-					</th><th>QUANTITY
-					</th><th>CATEGORY
-					</th></tr>";
-					// output data of each row
-					while($row = $result->fetch_assoc()) {
-				    	echo"<tr><td>".$row["INTprodid"].
-				    		"</td><td>".$row["STRprodname"].
-				    		"</td><td>".$row["STRproddesc"].
-				    		"</td><td>".$row["INTprodquan"].
-				    		"</td><td>".$row["INTcategoryid"].
-				    		"</td><tr>";
-					}
-			echo "</table>";
-		}else{
-			echo "0 results";
+	$stmt->execute();
+
+	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	if (count($results) > 0) {
+		echo "<table>
+				<tr>
+					<th>PRODUCT ID</th>
+					<th>NAME</th>
+					<th>DESCRIPTION</th>
+					<th>QUANTITY</th>
+					<th>CATEGORY</th>
+				</tr>";
+		
+		// Output data of each row
+		foreach ($results as $row) {
+			echo "<tr>
+					<td>" . htmlspecialchars($row["INTprodid"]) . "</td>
+					<td>" . htmlspecialchars($row["STRprodname"]) . "</td>
+					<td>" . htmlspecialchars($row["STRproddesc"]) . "</td>
+					<td>" . htmlspecialchars($row["INTprodquan"]) . "</td>
+					<td>" . htmlspecialchars($row["INTcategoryid"]) . "</td>
+				</tr>";
 		}
-		$conn->close();
+
+		echo "</table>";
+	} else {
+		echo "0 results";
+	}
+	$conn = null;
 	?>
+
 </body>
 </html>
