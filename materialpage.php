@@ -28,16 +28,20 @@
 					</th><th>NAME
 					</th><th>DESCRIPTION
 					</th><th>QUANTITY
-					</th><th>MODIFY
+					</th><th>EDIT
+					</th><th>DELETE
 					</th></tr>";
 					// output data of each row
-					foreach($result as $row) {
-				    	echo"<tr><td>".$row["INTmatid"].
-				    		"</td><td>".$row["STRmatname"].
-				    		"</td><td>".$row["STRmatdesc"].
-				    		"</td><td>".$row["INTmatquan"].
-				    		"</td><tr>";
-					}
+					foreach($result as $row) {?>
+						<tr>
+				    		<td><?php echo htmlspecialchars($row["INTmatid"]); ?></td>
+		                    <td><?php echo htmlspecialchars($row["STRmatname"]); ?></td>
+		                    <td><?php echo htmlspecialchars($row["STRmatdesc"]); ?></td>
+		                    <td><?php echo htmlspecialchars($row["INTmatquan"]); ?></td>
+				    		<td> <a href="../inventorysystem/material_item_edit.php?editID=<?php echo $row["INTmatid"] ?>"> Edit </a></td>
+				    		<td> <a href="../inventorysystem/material_item_delete_formhandler.php?deleteID=<?php echo $row["INTmatid"] ?>"> Delete </a></td>
+				    	</tr>
+				<?php	}
 			echo "</table>";
 		}else{
 			echo "0 results";

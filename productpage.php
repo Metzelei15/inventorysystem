@@ -1,4 +1,4 @@
-<?php include('dbconn.php') ?>
+<?php include('dbconn.php')?>
 <?php 
 	$query = "SELECT * FROM producttable";
 	try {
@@ -28,18 +28,21 @@
 					</th><th>NAME
 					</th><th>DESCRIPTION
 					</th><th>QUANTITY
-					</th><th>CATEGORY
-					</th><th>MODIFY
+					</th><th>EDIT
+					</th><th>DELETE
 					</th></tr>";
 					// output data of each row
-					foreach($result as $row) {
-				    	echo"<tr><td>".$row["INTprodid"].
-				    		"</td><td>".$row["STRprodname"].
-				    		"</td><td>".$row["STRproddesc"].
-				    		"</td><td>".$row["INTprodquan"].
-				    		"</td><td>".$row["INTcategoryid"].
-				    		"</td><tr>";
-					}
+					foreach($result as $row) {?>
+				    	<tr>
+				    		<td><?php echo htmlspecialchars($row["INTprodid"]); ?></td>
+		                    <td><?php echo htmlspecialchars($row["STRprodname"]); ?></td>
+		                    <td><?php echo htmlspecialchars($row["STRproddesc"]); ?></td>
+		                    <td><?php echo htmlspecialchars($row["INTprodquan"]); ?></td>
+				    		<td> <a href="../inventorysystem/product_item_edit.php?editID=<?php echo $row["INTprodid"] ?>"> Edit </a></td>
+				    		<td> <a href="../inventorysystem/product_item_delete_formhandler.php?deleteID=<?php echo $row["INTprodid"] ?>"> Delete </a></td>
+				    	</tr>
+
+					<?php }
 			echo "</table>";
 		}else{
 			echo "0 results";
