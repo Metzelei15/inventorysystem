@@ -1,7 +1,7 @@
 <?php
 $servername = "mysql:host=localhost;dbname=inventory";
 $dbusername = "root";
-$dbpassword = "root";
+$dbpassword = "";
 
 try {
   $conn = new PDO($servername, $dbusername, $dbpassword);
