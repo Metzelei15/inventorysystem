@@ -76,7 +76,6 @@ if (isset($_GET['report'])) {
         exit;
 
     } catch (PDOException $e) {
-        echo "Error: " . htmlspecialchars($e->getMessage());
         echo "Error generating report: " . htmlspecialchars($e->getMessage());
     }
 } else {
