@@ -5,50 +5,69 @@ session_start();
 if (!isset($_SESSION["role"])) {
     echo "<script>document.location.href = 'login.php'</script>";
     exit;
-} elseif ($_SESSION["role"] != "admin") {
-    echo "<script>document.location.href = 'adminhomepage.php'</script>";
+}
+
+try {
+    $createViewQuery = "
+        CREATE OR REPLACE VIEW combined_added_view AS
+        SELECT 
+            'Material' AS RecordType,
+            mat.INTmataddlogid AS LogID,
+            mat.DTmatadded AS DateAdded,
+            mat.INTmatid AS ItemID,
+            NULL AS CategoryID,
+            mat.INTaccntid AS AccountID
+        FROM materialaddedtable mat
+        UNION ALL
+        SELECT 
+            'Product' AS RecordType,
+            prod.INTprodaddlogid AS LogID,
+            prod.DTprodaddid AS DateAdded,
+            prod.INtprodid AS ItemID,
+            prod.INTcategoryid AS CategoryID,
+            prod.INTaccntid AS AccountID
+        FROM productaddedtable prod;
+    ";
+    $conn->exec($createViewQuery);
+} catch (PDOException $e) {
+    echo "Error creating view: " . htmlspecialchars($e->getMessage());
     exit;
 }
 
-// Check if the `report` parameter is set
 if (isset($_GET['report'])) {
     $report = $_GET['report'];
 
-    // Determine the SQL query based on the report type
-    $query = "";
+    $query = "SELECT * FROM combined_added_view WHERE ";
+
     if ($report === "Today") {
-        $query = "SELECT * FROM your_table WHERE DATE(date_column) = CURDATE()";
+        $query .= "DATE(DateAdded) = CURDATE()";
     } elseif ($report === "Week") {
-        $query = "SELECT * FROM your_table WHERE WEEK(date_column) = WEEK(CURDATE())";
+        $query .= "WEEK(DateAdded, 1) = WEEK(CURDATE(), 1) AND YEAR(DateAdded) = YEAR(CURDATE())";
     } elseif ($report === "Month") {
-        $query = "SELECT * FROM your_table WHERE MONTH(date_column) = MONTH(CURDATE())";
+        $query .= "MONTH(DateAdded) = MONTH(CURDATE()) AND YEAR(DateAdded) = YEAR(CURDATE())";
     } else {
         echo "Invalid report type.";
         exit;
     }
 
     try {
-        // Execute the SQL query
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Generate the CSV file
         $filename = strtolower($report) . "_report_" . date("Ymd_His") . ".csv";
 
-        // Set headers for the CSV download
         header("Content-Type: text/csv");
         header("Content-Disposition: attachment; filename=\"$filename\"");
 
-        // Open output stream for writing the CSV
         $output = fopen("php://output", "w");
 
-        // Write column headers to the CSV
         if (!empty($results)) {
             fputcsv($output, array_keys($results[0]));
+        } else {
+            fputcsv($output, ['No data available for the selected period']);
         }
 
-        // Write rows to the CSV
         foreach ($results as $row) {
             fputcsv($output, $row);
         }
@@ -58,6 +77,7 @@ if (isset($_GET['report'])) {
 
     } catch (PDOException $e) {
         echo "Error: " . htmlspecialchars($e->getMessage());
+        echo "Error generating report: " . htmlspecialchars($e->getMessage());
     }
 } else {
     echo "No report type selected.";
