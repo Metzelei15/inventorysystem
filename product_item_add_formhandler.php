@@ -3,26 +3,22 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	$STRprodname = htmlspecialchars($_POST["STRprodname"]);
 	$STRproddesc = htmlspecialchars($_POST["STRproddesc"]);
-	$INTcategoryid = htmlspecialchars($_POST["INTcategoryid"]);
-	echo $INTcategoryid;
-	echo $STRcategoryname;
 	try {
 		require_once "dbconn.php";
-		$query = "INSERT INTO producttable(STRprodname, STRproddesc, INTcategoryid) 
-								VALUES(:STRprodname,:STRproddesc,:INTcategoryid);";
+		$query = "INSERT INTO producttable(STRprodname, STRproddesc) 
+								VALUES(:STRprodname,:STRproddesc);";
 
 		$stmt = $conn->prepare($query);
 
 		$stmt ->bindParam(":STRprodname", $STRprodname);
 		$stmt ->bindParam(":STRproddesc", $STRproddesc);
-		$stmt ->bindParam(":INTcategoryid", $INTcategoryid);
 
 		$stmt->execute();
 
 		$conn = null;
 		$stmt = null;
 
-		header("Location: ../inventorysystem/productadd.php");
+		header("Location: ../inventorysystem/product_item_add.php");
 
 		die();
 
@@ -30,6 +26,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			die("Query failed: " . $e->getMessage());
 		}
 	} else {
-		/**this shit throws an error sa browser kaya naka comment to**/
-		/**header("Location: ../inventorysystem/productadd.php");**/
+		header("Location: ../inventorysystem/product_item_add.php");
 	}
