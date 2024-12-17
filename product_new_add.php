@@ -1,8 +1,6 @@
 <?php include_once('dbconn.php')?>
-<?php include_once('formhandler.php');
-
+<?php 
 	$sql = "SELECT * FROM categorytable";
-
 	try {
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
@@ -14,17 +12,16 @@
 ?>
 <html>
 <head>
-	<title>Product Add</title>
+	<title>Product Log Add</title>
 </head>
 <body>
-	<form action="formhandler.php" method="POST">
+	<form action="product_new_add_formhandler.php" method="POST">
 		<label for="STRprodname">Product Name</label>
 		<input type="text" name="STRprodname" required><br>
 
 		<label for="STRproddesc">Product Description</label>
 		<input type="text" name="STRproddesc" required><br>
 
-		<!--this is for testing papalitan pa tong part ng select-->
 		<label for="INTcategoryid">Category</label>
 		<select name = "INTcategoryid" required>
 			<option >--SELECT CATEGORY--</option>

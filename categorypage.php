@@ -1,4 +1,15 @@
 <?php include('dbconn.php')?>
+<?php 
+	$sql = "SELECT * FROM categorytable";
+	try {
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+		$result1=$stmt->fetchAll();
+	} catch (PDOException $ex) {
+		echo($ex->ex.getMessage());
+	}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,17 +22,16 @@
 </head>
 <body>
 	<?php
-		$query = "SELECT * FROM `categorytable`;";
-		$result = mysqli_query($conn, $query);
 
-		if($result->num_rows > 0) {
+		if($result1 > 0) {
 			echo "<table>
 					<tr><th>CATEGORY ID
 					</th><th>NAME
 					</th><th>DESCRIPTION
+					</th><th>MODIFY
 					</th></tr>";
 					// output data of each row
-					while($row = $result->fetch_assoc()) {
+					foreach($result1 as $row) {
 				    	echo"<tr><td>".$row["INTcategoryid"].
 				    		"</td><td>".$row["STRcategoryname"].
 				    		"</td><td>".$row["STRcategorydesc"].
@@ -31,7 +41,6 @@
 		}else{
 			echo "0 results";
 		}
-		$conn->close();
 	?>
 </body>
 </html>
