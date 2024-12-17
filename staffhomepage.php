@@ -1,7 +1,6 @@
 <?php 
 	include('dbconn.php');
 	session_start();
-
 	if (!isset($_SESSION["role"])){
 		echo "<script>document.location.href = 'login.php'</script>";
 	} else if ($_SESSION["role"]=="admin"){
@@ -373,7 +372,11 @@
 
                 case 'Report':
                     echo "<div style='text-align: center;'>
-                        <button onClick=alert('WalapangReport')>Generate Report</button>
+					<form action='reportgeneration.php' method='GET'>
+                        <input type='submit' name='report' value='Today'>
+            			<input type='submit' name='report' value='Week'>
+           		 		<input type='submit' name='report' value='Month'>
+					</form>
                     </div>";
                     break;
 
@@ -392,6 +395,10 @@
 			} else {
 				form.style.display = 'none';  // Hide the form
 			}
+		}
+
+		function generateReportForm(){
+			document.location.href = "reportgeneration.php";
 		}
 	</script>
 </body>

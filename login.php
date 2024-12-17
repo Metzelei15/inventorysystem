@@ -9,10 +9,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     try {
         // Prepare the query to join `account` and `account role` tables
         $query = "
-            SELECT a.`INTaccntid`, ar.`STRaccntrole`
-            FROM `account` a
-            JOIN `account role` ar ON a.`INTaccntid` = ar.`INTaccntid`
-            WHERE a.`STRusername` = :username AND a.`INTpassword` = :password
+            SELECT `INTaccntid`, `INTroleid`
+            FROM `account`
+            WHERE `STRusername` = :username AND `STRpassword` = :password
         ";
 
         // Use prepared statements to prevent SQL injection
@@ -24,13 +23,15 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            $_SESSION["role"] = $row['STRaccntrole'];
+            $_SESSION["role"] = $row['INTroleid'];
             $_SESSION["accntid"] = $row['INTaccntid'];
 
             // Redirect based on role
-            if ($row['STRaccntrole'] == 'admin') {
+            if ($row['INTroleid'] == '1') {
+                $_SESSION["role"] = "admin";
                 echo "<script>document.location.href='adminhomepage.php';</script>";
-            } elseif ($row['STRaccntrole'] == 'staff') {
+            } elseif ($row['INTroleid'] == '2') {
+                $_SESSION["role"] = "staff";
                 echo "<script>document.location.href='staffhomepage.php';</script>";
             }
         } else {
@@ -120,7 +121,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
     <!-- Display Error Message if credentials are incorrect -->
     <?php
-    if (isset($_POST['username']) && isset($_POST['password']) && mysqli_num_rows($result) === 0) {
+    if (isset($_POST['username']) && isset($_POST['password']) && isset($stmt) && $stmt->rowCount() === 0) {
         echo "<div class='error-message'>Invalid username or password. Please try again.</div>";
     }
     ?>
