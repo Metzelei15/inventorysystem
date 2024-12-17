@@ -319,65 +319,56 @@
 
                 case 'Material':
                     $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-                    $query = "SELECT `INTmatid`, `STRmatname`, `INTmatquan` FROM `materialtable`";
+					$query = "SELECT `INTmatid`, `STRmatname`, `INTmatquan` FROM `materialtable`";
 
-                    if ($search !== '') {
-                        if (is_numeric($search)) {
-                            $query .= " WHERE `INTmatid` = :search";
-                        } else {
-                            $query .= " WHERE `STRmatname` LIKE :search";
-                        }
-                    }
+					if ($search !== '') {
+						if (is_numeric($search)) {
+							$query .= " WHERE `INTmatid` = :search";
+						} else {
+							$query .= " WHERE `STRmatname` LIKE :search";
+						}
+					}
 
-                    $stmt = $conn->prepare($query);
-                    if ($search !== '') {
-                        $stmt->bindValue(':search', is_numeric($search) ? $search : "%$search%", PDO::PARAM_STR);
-                    }
-                    $stmt->execute();
+					$stmt = $conn->prepare($query);
+					if ($search !== '') {
+						if (is_numeric($search)) {
+							$stmt->bindValue(':search', (int)$search, PDO::PARAM_INT);
+						} else {
+							$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
+						}
+					}
 
-                    echo "
-                        <form method='GET' style='text-align: center;'>
-                            <input type='hidden' name='section' value='Material'>
-                            <input type='text' id='search' name='search' value='" . htmlspecialchars($search) . "' placeholder='Enter Material ID or Name'>
-                            <button class='small-button' type='submit'>Search</button>
-                        </form>";
+					$stmt->execute();
+					$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    echo "<table>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Stock</th>
-                            </tr>";
+					echo "
+						<form method='GET' style='text-align: center;'>
+							<input type='hidden' name='section' value='Material'>
+							<input type='text' id='search' name='search' value='" . htmlspecialchars($search) . "' placeholder='Enter Material ID or Name'>
+							<button class='small-button' type='submit'>Search</button>
+						</form>";
 
-							if (isset($search)) {
-								try {
-									$query = "SELECT `INTmatid`, `STRmatname`, `INTmatquan` FROM `materialtable` WHERE `STRmatname` LIKE :search";
-									$stmt = $conn->prepare($query);
-							
-									// Bind the search term to the placeholder
-									$stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
-				
-									$stmt->execute();
-									$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-					
-									if (count($results) > 0) {
-										foreach ($results as $row) {
-											echo "
-												<tr>
-													<td>" . htmlspecialchars($row['INTmatid']) . "</td>
-													<td>" . htmlspecialchars($row['STRmatname']) . "</td>
-													<td>" . htmlspecialchars($row['INTmatquan']) . "</td>
-												</tr>";
-										}
-									} else {
-										echo "<tr><td colspan='3'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No materials found") . "</td></tr>";
-									}
-								} catch (PDOException $e) {
-									echo "<tr><td colspan='3'>Error: " . $e->getMessage() . "</td></tr>";
-								}
-							}
+					echo "<table>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Stock</th>
+							</tr>";
 
-                    echo "</table>";
+					if (count($results) > 0) {
+						foreach ($results as $row) {
+							echo "
+								<tr>
+									<td>" . htmlspecialchars($row['INTmatid']) . "</td>
+									<td>" . htmlspecialchars($row['STRmatname']) . "</td>
+									<td>" . htmlspecialchars($row['INTmatquan']) . "</td>
+								</tr>";
+						}
+					} else {
+						echo "<tr><td colspan='3'>" . ($search !== '' ? "No results found for <strong>" . htmlspecialchars($search) . "</strong>" : "No materials found") . "</td></tr>";
+					}
+
+					echo "</table>";
                     break;
 
                 case 'Report':
