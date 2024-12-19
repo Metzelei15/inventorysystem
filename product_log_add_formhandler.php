@@ -1,17 +1,17 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $INTmatid = (int)$_POST['INTmatid'];
+    $INTprodid = (int)$_POST['INTprodid'];
     $INTstockchange = (int)$_POST['INTstockchange'];
     $STRaction = htmlspecialchars($_POST['STRaction']);
 
     try {
         require_once 'dbconn.php';
-        $query = "INSERT INTO materialstockslog (INTmatid, INTstockchange, STRaction) 
-                                         VALUES (:INTmatid, :INTstockchange, :STRaction)";
+        $query = "INSERT INTO productstockslog (INTprodid, INTstockchange, STRaction) 
+                                         VALUES (:INTprodid, :INTstockchange, :STRaction)";
 
         $stmt = $conn->prepare($query);
 
-        $stmt->bindParam(":INTmatid", $INTmatid);
+        $stmt->bindParam(":INTprodid", $INTprodid);
         $stmt->bindParam(":INTstockchange", $INTstockchange);
         $stmt->bindParam(":STRaction", $STRaction);
 
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn = null;
         $stmt = null;
 
-        header("Location: ../inventorysystem/material_log_page.php");
+        header("Location: ../inventorysystem/product_log_page.php");
 
         die();
 
@@ -28,5 +28,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Query failed: " . $e->getMessage());
         }
     } else {
-        header("Location: ../inventorysystem/material_log_add.php");
+        header("Location: ../inventorysystem/product_log_add.php");
     }

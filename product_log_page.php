@@ -3,15 +3,15 @@ require_once 'dbconn.php';
 
 try {
     $query = "SELECT 
-              p.STRmatname, 
+              p.STRprodname, 
               l.INTstockchange, 
               l.STRaction, 
-              l.DTmatdtlog, 
-              l.INTmatlogid
+              l.DTproddtlog, 
+              l.INTprodlogid
           FROM 
-              materialstockslog l
+              productstockslog l
           JOIN 
-              materialtable p ON l.INTmatid = p.INTmatid";
+              producttable p ON l.INTprodid = p.INTprodid";
 
 $stmt = $conn->prepare($query);
 $stmt->execute();
@@ -25,7 +25,7 @@ $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Material Logs</title>
+    <title>Product Logs</title>
     <style>
         table, th, td {
             border: 1px solid;
@@ -36,17 +36,17 @@ $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php if (count($logs) > 0): ?>
         <table>
                 <tr>
-                    <th>Material Name</th>
+                    <th>Product Name</th>
                     <th>Stock Change</th>
                     <th>Action</th>
                     <th>Date</th>
                 </tr>
             <?php foreach ($logs as $row): ?>
                  <tr>
-                    <td><?php echo htmlspecialchars($row['STRmatname']); ?></td>
+                    <td><?php echo htmlspecialchars($row['STRprodname']); ?></td>
                     <td><?php echo htmlspecialchars($row['INTstockchange']); ?></td>
                     <td><?php echo htmlspecialchars($row['STRaction']); ?></td>
-                    <td><?php echo htmlspecialchars($row['DTmatdtlog']); ?></td>
+                    <td><?php echo htmlspecialchars($row['DTproddtlog']); ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>

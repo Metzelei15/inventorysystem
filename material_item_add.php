@@ -7,15 +7,12 @@
 	<title>Add a new Material</title>
 </head>
 <body>
-	<form action="material_new_add_formhandler.php" method="POST">
+	<form action="material_item_add_formhandler.php" method="POST">
 		<label for="STRmatname">Material Name</label>
 		<input type="text" name="STRmatname" required><br>
 
 		<label for="STRmatdesc">Material Description</label>
 		<input type="text" name="STRmatdesc" required><br>
-
-		<label for="INTmatquan">Material Quantity</label>
-		<input type="number" name="INTmatquan"><br>
 
 		<button type="submit">Submit</button>
 	</form>
