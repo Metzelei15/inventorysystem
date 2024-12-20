@@ -74,7 +74,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         <label>
           <input type="checkbox" id="remember-me" name="remember-me"><span class="remember-text"> Remember Me</span>
         </label>
-        <a href="#" class="forgot-password">Forgot Password?</a>
+        
       </div>
 
       <button type="submit" class="Login"> 
@@ -82,7 +82,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
       </button>
     </form>
     <div class="Header-login">
-    <p>Not registered yet?</p><span class="create-account"><a href="" class="create-account">create a new account</a></span>
+    
   </div>
   </div>
   <?php

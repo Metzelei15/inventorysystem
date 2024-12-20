@@ -14,7 +14,7 @@
     padding-left: 10px;
     box-sizing: border-box;
     z-index: 100; /* Ensure sidebar stays above the content */
-        font-family: 'Poppins', sans-serif; /* Apply the Poppins font to the sidebar */
+    font-family: 'Poppins', sans-serif; /* Apply the Poppins font to the sidebar */
     color: #fff; /* White text for links */
 }
 
@@ -32,24 +32,32 @@
     color: #fff;
     text-decoration: none;
     display: block;
-    padding: 10px;
-    transition: background-color 0.3s;
+    padding: 15px;
+    transition: background-color 0.5s;
+    border-radius: 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
 }
 
 .sidebar ul li a:hover {
-    background-color: #555;
+    background: linear-gradient(to bottom left, rgba(242, 171, 209, 1) 0%, rgba(106, 149, 222, 1) 100%);
+    transition: 0.7s;
+    color: #101540;
+    border-radius: 16px;
 }
 
 /* Main Content Styling */
 .main-content {
     margin-left: 250px; /* Adjust to the sidebar width */
-    padding: 20px; /* Add padding inside the box */
+    margin-top: 10px;
+    padding: 200px; /* Add padding inside the box */
     width: calc(100% - 270px); /* Adjust for the sidebar width and margin */
     box-sizing: border-box; /* Include padding in width calculation */
     background: linear-gradient(to bottom, rgba(242, 171, 209, 1) 0%, rgba(106, 149, 222, 1) 100%);
 
     border: 1px solid #ddd; /* Light gray border for the box */
-    border-radius: 0px; /* Rounded corners for a softer look */
+    border-radius: 16px; /* Rounded corners for a softer look */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
 }
 
@@ -64,16 +72,18 @@
 
 
 /* Container for the whole table, header, and buttons */
-.table-container {
+.table-container 
+{
     width: 100%;
     max-width: 1200px; /* Adjust max-width as needed */
     margin: 0 auto; /* Centers the content horizontally */
     padding: 20px; /* Add padding around the container */
     box-sizing: border-box; /* Ensure padding is included in width calculation */
     background-color: #f9f9f9; /* Light background for the container */
-    border-radius: 0px; /* Optional: Rounded corners */
+    border-radius: 16px; /* Optional: Rounded corners */
     border: 1px solid #ddd; /* Optional: Add border to the container */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Soft shadow around the container */
+    box-shadow: 0 4px 8px rgba(0, 1, 1, 0.8); /* Optional: Soft shadow around the container */
+    
 }
 
 /* Header with Text and Buttons */
@@ -185,12 +195,12 @@ tbody tr::after {
 /* Link Styling for Links Inside the Table */
 table a {
     display: inline-block; /* Make the link behave like a button */
-    background-color: #28a745; /* Green background */
+    background-color: #52B788; /* Green background */
     color: white; /* White text */
-    padding: 8px 15px; /* Adjust padding to make it button-like */
+    padding: 7px 14px; /* Adjust padding to make it button-like */
     text-decoration: none; /* Remove underline */
     text-align: center; /* Center the text */
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 18px; /* Rounded corners */
     font-size: 14px; /* Adjust font size */
     font-family: 'Poppins', sans-serif; /* Use the same font */
     transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
