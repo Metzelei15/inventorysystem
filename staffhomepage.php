@@ -14,170 +14,7 @@
 <html>
 <head>
 	<title>Staff Dashboard</title>
-	<style>
-		:root {
-			--primary-green: #04AA6D;
-			--primary-green-hover: #038c57;
-			--text-color-dark: #333;
-			--text-color-light: #fff;
-			--border-color: #ddd;
-		}
-
-		/* Sidebar Styles */
-		ul {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			width: 10%;
-			background-color: #f1f1f1;
-			position: fixed;
-			height: 100%;
-			overflow: auto;
-		}
-
-		li a {
-			display: block;
-			color: #000;
-			padding: 8px 16px;
-			text-decoration: none;
-		}
-
-		li a.active {
-			background-color: var(--primary-green);
-			color: var(--text-color-light);
-		}
-
-		li a:hover:not(.active) {
-			background-color: #555;
-			color: var(--text-color-light);
-		}
-
-		/* Form Styles */
-		form input, form button, input[type='text'], input[type='number'], select {
-			margin: 10px 0;
-			display: block;
-			padding: 8px 16px;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			font-size: 14px;
-			color: var(--text-color-dark);
-		}
-
-		input[type='text'],
-		input[type='number'],
-		select {
-			width: 100%;
-			margin-bottom: 15px;
-			background-color: #fff;
-		}
-
-		button {
-			background-color: var(--primary-green);
-			color: var(--text-color-light);
-			border: none;
-			padding: 10px;
-			width: 100%;
-			cursor: pointer;
-			font-size: 16px;
-			border-radius: 4px;
-			transition: background-color 0.3s;
-		}
-
-		button:hover {
-			background-color: var(--primary-green-hover);
-		}
-
-		/* Main Content */
-		#content {
-			margin-left: 12%;
-			padding: 10px;
-		}
-
-		/* Table Styles */
-		table {
-			width: 80%;
-			border-collapse: collapse;
-			margin: 20px auto;
-		}
-
-		table th, table td {
-			border: 1px solid var(--border-color);
-			padding: 8px;
-			text-align: center;
-		}
-
-		table th {
-			background-color: var(--primary-green);
-			color: var(--text-color-light);
-		}
-
-		/* Form Container to Arrange Forms Side by Side */
-		.form-container {
-			display: flex;
-			gap: 30px;
-			margin-top: 30px;
-		}
-
-		/* Styling for the Add and Delete Product Boxes */
-		.form-box {
-			background-color: var(--primary-green);
-			border: 1px solid var(--border-color);
-			border-radius: 8px;
-			padding: 20px;
-			width: 45%;
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-			color: var(--text-color-light);
-		}
-
-		.form-box h2 {
-			text-align: center;
-		}
-
-		/* Label styling */
-		label {
-			display: block;
-			font-size: 14px;
-			margin-bottom: 5px;
-			color: var(--text-color-dark);
-		}
-
-		/* Responsive Styles for Small Screens */
-		@media (max-width: 768px) {
-			.form-container {
-				flex-direction: column;
-				align-items: center;
-			}
-
-			.form-box {
-				width: 80%;
-			}
-		}
-
-		.small-button {
-			background-color: #04AA6D;
-			color: white;
-			padding: 5px; 
-			font-size: 12px;     
-			width: 100px;        
-			height: 30px;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			transition: background-color 0.3s;
-			display: inline-block;
-			margin-right: 10px;
-		}
-
-		.small-button:hover {
-			background-color: #038c57;
-		}
-
-		/* Align the buttons side by side */
-		.button-container {
-			text-align: center;
-		}
-
-	</style>
+	<link rel ="stylesheet" href="inventory_style_sheet.css">
 </head>
 <?php
 	if (isset($_POST["logout"])){
@@ -187,13 +24,17 @@
 	}
 ?>
 <body>
-    <ul>
-        <li>Dashboard</li>
-        <li><a href="?section=Product" class="<?= isset($_GET['section']) && $_GET['section'] === 'Product' ? 'active' : '' ?>">Product</a></li>
-        <li><a href="?section=Material" class="<?= isset($_GET['section']) && $_GET['section'] === 'Material' ? 'active' : '' ?>">Material</a></li>
-        <li><a href="?section=Report" class="<?= isset($_GET['section']) && $_GET['section'] === 'Report' ? 'active' : '' ?>">Report</a></li>
-        <form method="POST"><button class="small-button" type="submit" name="logout">Logout</button></form>
-    </ul>
+<div class="sidebar">
+        <div class="logo"><img src="images/Main_logo_2.png" class ="logo-mhaine"></div>
+        <ul>
+            <li><a href="../inventorysystem/adminhomepage.php">Home</a></li>
+            <li><a href="../inventorysystem/productpage.php">Products</a></li>
+            <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
+            <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
+            <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
     <div id="content">
         <?php
         include('dbconn.php');

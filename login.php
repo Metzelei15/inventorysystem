@@ -48,15 +48,16 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 <head>
     <title>Mhaine Inventory System</title>
     <link rel="stylesheet" href="login_style_sheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
-  <div class="img-holder"><img src="images/Main_logo_1.jpg"></div>
+  <div class="img-holder"><img src="images/Main_logo_2.png"></div>
   <div class="login-div">
     <form action="#" method="POST">
       
     <div class="Header-login">
-      <h1>Login</h1><br>
-      <p>See your growth and get support!</p>
+      <h1>Login</h1>
     </div>
       <div class="input-div">
 
