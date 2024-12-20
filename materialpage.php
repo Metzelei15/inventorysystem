@@ -38,8 +38,9 @@
 	    <span class="header-text">Material List</span>
 			<div class="button-group">
 				<button class="Add-product" onclick="document.location='material_search.php'"> Search Material </button>
+				<button class="Add-product" onclick="document.location='material_item_add.php'"> Add Material </button>
+				<button class="Add-product" onclick="document.location='material_log_page.php'"> Material Log </button>
 				<button class="Add-product" onclick="document.location='material_log_add.php'"> Add New log </button>
-			    <button class="Add-product" onclick="document.location='material_item_add.php'"> Add Material </button>
 			</div>
 		</div>
 

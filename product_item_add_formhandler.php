@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$conn = null;
 		$stmt = null;
 
-		header("Location: ../inventorysystem/product_item_add.php");
+		header("Location: ../inventorysystem/productpage.php");
 
 		die();
 

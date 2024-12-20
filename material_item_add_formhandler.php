@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$conn = null;
 		$stmt = null;
 
-		header("Location: ../inventorysystem/material_item_add.php");
+		header("Location: ../inventorysystem/materialpage.php");
 
 		die();
 
@@ -26,5 +26,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			die("Query failed: " . $e->getMessage());
 		}
 	} else {
-		header("Location: ../inventorysystem/material_item_add.php");
+		header("Location: ../inventorysystem/materialpage.php");
 	}

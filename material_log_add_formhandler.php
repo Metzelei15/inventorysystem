@@ -9,7 +9,7 @@ if (isset($_POST['INTmatid'], $_POST['INTmatstockchange'], $_POST['STRaction']))
     try {
         $conn->beginTransaction();
 
-        $query = "SELECT INTmatquan FROM material WHERE INTmatid = :INTmatid LIMIT 1";
+        $query = "SELECT INTmatquan FROM materialtable WHERE INTmatid = :INTmatid LIMIT 1";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':INTmatid', $INTmatid, PDO::PARAM_INT);
         $stmt->execute();
@@ -35,7 +35,7 @@ if (isset($_POST['INTmatid'], $_POST['INTmatstockchange'], $_POST['STRaction']))
         $insertStmt->bindParam(':STRaction', $STRaction, PDO::PARAM_STR);
         $insertStmt->execute();
 
-        $updateQuery = "UPDATE material SET INTmatquan = :newStock WHERE INTmatid = :INTmatid";
+        $updateQuery = "UPDATE materialtable SET INTmatquan = :newStock WHERE INTmatid = :INTmatid";
         $updateStmt = $conn->prepare($updateQuery);
         $updateStmt->bindParam(':newStock', $newStock, PDO::PARAM_INT);
         $updateStmt->bindParam(':INTmatid', $INTmatid, PDO::PARAM_INT);

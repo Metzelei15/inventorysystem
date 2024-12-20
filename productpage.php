@@ -38,8 +38,10 @@
 	    <span class="header-text">Product List</span>
 			<div class="button-group">
 				<button class="Add-product" onclick="document.location='product_search.php'"> Search Product </button>
-				<button class="Add-product" onclick="document.location='product_log_add.php'"> Add New log </button>
 			    <button class="Add-product" onclick="document.location='product_item_add.php'"> Add New Product </button>
+			    <button class="Add-product" onclick="document.location='product_log_page.php'"> Product Logs </button>
+			    <button class="Add-product" onclick="document.location='product_log_add.php'"> Add New log </button>
+				
 			</div>
 		</div>
 
