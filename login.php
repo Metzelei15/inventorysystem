@@ -7,14 +7,14 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     try {
-        // Prepare the query to join `account` and `account role` tables
+        //Prepare the query to join `account` and `account role` tables
         $query = "
             SELECT `INTaccntid`, `INTroleid`
             FROM `account`
             WHERE `STRusername` = :username AND `STRpassword` = :password
         ";
 
-        // Use prepared statements to prevent SQL injection
+        //Use prepared statements to prevent SQL injection
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
@@ -26,7 +26,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION["role"] = $row['INTroleid'];
             $_SESSION["accntid"] = $row['INTaccntid'];
 
-            // Redirect based on role
+            //Redirect based on role
             if ($row['INTroleid'] == '1') {
                 $_SESSION["role"] = "admin";
                 echo "<script>document.location.href='adminhomepage.php';</script>";
@@ -35,97 +35,59 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 echo "<script>document.location.href='staffhomepage.php';</script>";
             }
         } else {
-            // Handle invalid credentials
             echo "<script>alert('Invalid username or password');</script>";
         }
     } catch (PDOException $e) {
-        // Handle potential errors
         echo "<script>alert('An error occurred: " . htmlspecialchars($e->getMessage()) . "');</script>";
     }
 }
 ?>
 
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Mhaine Inventory System</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
-        }
-        .login-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-        h2 {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            text-align: left;
-        }
-        input[type="text"], input[type="password"] {
-            width: 90%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #04AA6D;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-		
-        .error-message {
-            color: red;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="login_style_sheet.css">
 </head>
 <body>
+  <div class="img-holder"><img src="images/Main_logo_1.jpg"></div>
+  <div class="login-div">
+    <form action="#" method="POST">
+      
+    <div class="Header-login">
+      <h1>Login</h1><br>
+      <p>See your growth and get support!</p>
+    </div>
+      <div class="input-div">
 
-<div class="login-container">
-    <h2>Mhaine Inventory System</h2>
+        <label for="username">Email*</label>
+        <input type="text" id="username" name="username" placeholder="Enter your email" required>
+      </div>
+      
+      <div class="input-div">
+        <label for="password">Password*</label>
+        <input type="password" id="password" name="password" placeholder="Minimum 8 characters" required>
+      </div>
 
-    <!-- Login Form -->
-    <form method="POST">
-        <label for="username">Username</label>
-        <input type="text" name="username" placeholder="Username" required>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" id="remember-me" name="remember-me"><span class="remember-text"> Remember Me</span>
+        </label>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+      </div>
 
-        <label for="password">Password</label>
-        <input type="password" name="password" placeholder="Password" required>
-
-        <button type="submit">Login</button>
+      <button type="submit" class="Login"> 
+        Login
+      </button>
     </form>
-
-    <!-- Display Error Message if credentials are incorrect -->
-    <?php
+    <div class="Header-login">
+    <p>Not registered yet?</p><span class="create-account"><a href="" class="create-account">create a new account</a></span>
+  </div>
+  </div>
+  <?php
     if (isset($_POST['username']) && isset($_POST['password']) && isset($stmt) && $stmt->rowCount() === 0) {
         echo "<div class='error-message'>Invalid username or password. Please try again.</div>";
     }
     ?>
-</div>
-
 </body>
 </html>

@@ -1,12 +1,11 @@
 <?php 
 	include('dbconn.php');
-	session_start();
-	if (!isset($_SESSION["role"])){
-		echo "<script>document.location.href = 'login.php'</script>";
-	} else if ($_SESSION["role"]=="admin"){
-		echo "<script>document.location.href = 'adminhomepage.php'</script>";
+	include_once('session_handling.php');
+	if ($_SESSION["role"]!="staff"){
+		header("Location: login.php");
+		session_unset();
+		session_destroy();
 	}
-
 	if (isset($_GET['section'])) {
 		echo "You have clicked on the " . $_GET['section'] . " section.";
 	}
