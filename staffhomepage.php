@@ -25,7 +25,7 @@
 ?>
 <body>
 <div class="sidebar">
-        <div class="logo"><img src="images/Main_logo_2.png" class ="logo-mhaine"></div>
+        <div class="logo"><img src="images/Main_logo_2.png" class="logo-mhaine"></div>
         <ul>
             <li><a href="../inventorysystem/adminhomepage.php">Home</a></li>
             <li><a href="../inventorysystem/productpage.php">Products</a></li>
