@@ -6,7 +6,7 @@
     align-items: center;
     overflow: hidden;
     flex-direction: column;
-    background: linear-gradient(to bottom, rgba(242, 171, 209, 1) 0%, rgba(106, 149, 222, 1) 100%);
+    background: linear-gradient(to bottom left, rgba(242, 171, 209, 1) 0%, rgba(106, 149, 222, 1) 100%);
     position: fixed; /* Sidebar stays fixed */
     top: 0;
     left: 0;
@@ -38,6 +38,7 @@
     border-style: solid;
     border-width: 1px;
     border-color: white;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar ul li a:hover {
@@ -74,10 +75,9 @@
     width: calc(100% - 270px); /* Adjust for the sidebar width and margin */
     box-sizing: border-box; /* Include padding in width calculation */
     background: linear-gradient(to bottom, rgba(242, 171, 209, 1) 0%, rgba(106, 149, 222, 1) 100%);
-
-    border: 1px solid #ddd; /* Light gray border for the box */
+    border: 1px solid white; /* Light gray border for the box */
     border-radius: 16px; /* Rounded corners for a softer look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for elevation */
 }
 
 /* Main Content Box Container */
