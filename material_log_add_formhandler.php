@@ -1,32 +1,59 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+require_once 'dbconn.php';
+
+if (isset($_POST['INTmatid'], $_POST['INTmatstockchange'], $_POST['STRaction'])) {
     $INTmatid = (int)$_POST['INTmatid'];
-    $INTstockchange = (int)$_POST['INTstockchange'];
-    $STRaction = htmlspecialchars($_POST['STRaction']);
+    $INTmatstockchange = (int)$_POST['INTmatstockchange'];
+    $STRaction = $_POST['STRaction'];
 
     try {
-        require_once 'dbconn.php';
-        $query = "INSERT INTO materialstockslog (INTmatid, INTstockchange, STRaction) 
-                                         VALUES (:INTmatid, :INTstockchange, :STRaction)";
+        $conn->beginTransaction();
 
+        $query = "SELECT INTmatquan FROM material WHERE INTmatid = :INTmatid LIMIT 1";
         $stmt = $conn->prepare($query);
-
-        $stmt->bindParam(":INTmatid", $INTmatid);
-        $stmt->bindParam(":INTstockchange", $INTstockchange);
-        $stmt->bindParam(":STRaction", $STRaction);
-
+        $stmt->bindParam(':INTmatid', $INTmatid, PDO::PARAM_INT);
         $stmt->execute();
+        $material = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $conn = null;
-        $stmt = null;
+        if (!$material) {
+            throw new Exception("Material not found.");
+        }
 
+        $currentStock = (int)$material['INTmatquan'];
+        $stockChange = ($STRaction === 'Add') ? $INTmatstockchange : -$INTmatstockchange;
+        $newStock = $currentStock + $stockChange;
+
+        if ($newStock < 0) {
+            throw new Exception("Stock cannot go below zero.");
+        }
+
+        $insertQuery = "INSERT INTO materialstockslog (INTmatid, INTmatstockchange, STRaction, DTmatdtlog) 
+                        VALUES (:INTmatid, :INTmatstockchange, :STRaction, NOW())";
+        $insertStmt = $conn->prepare($insertQuery);
+        $insertStmt->bindParam(':INTmatid', $INTmatid, PDO::PARAM_INT);
+        $insertStmt->bindParam(':INTmatstockchange', $INTmatstockchange, PDO::PARAM_INT);
+        $insertStmt->bindParam(':STRaction', $STRaction, PDO::PARAM_STR);
+        $insertStmt->execute();
+
+        $updateQuery = "UPDATE material SET INTmatquan = :newStock WHERE INTmatid = :INTmatid";
+        $updateStmt = $conn->prepare($updateQuery);
+        $updateStmt->bindParam(':newStock', $newStock, PDO::PARAM_INT);
+        $updateStmt->bindParam(':INTmatid', $INTmatid, PDO::PARAM_INT);
+        $updateStmt->execute();
+
+        $conn->commit();
+        echo "Material stock log added successfully.";
         header("Location: ../inventorysystem/material_log_page.php");
 
-        die();
+    } catch (Exception $e) {
+        $conn->rollBack();
 
-        } catch (PDOException $e) {
-            die("Query failed: " . $e->getMessage());
-        }
-    } else {
-        header("Location: ../inventorysystem/material_log_add.php");
+        header("Location: ../inventorysystem/material_log_page.php");
+        die("Error: " . $e->getMessage());
     }
+
+} else {
+    header("Location: ../inventorysystem/material_log_page.php");
+    die("Invalid input.");
+}
+?>

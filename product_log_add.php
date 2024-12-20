@@ -1,9 +1,7 @@
-<?php include 'dbconn.php';  ?>
+<?php include ('dbconn.php');?>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Product Add Log</title>
 </head>
 <body>
@@ -18,13 +16,13 @@
 	        $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 	        foreach ($materials as $material) {
-	            echo "<option value='{$material['INTprodid']}'>{$material['STRprodname']}</option>";
+	            echo "<option value='{$material['INTprodid']}'> {$material['STRprodname']}</option>";
 	        }
         ?>
     </select><br>
 
     <label>Stock Change:</label>
-    <input type="number" name="INTstockchange" required><br>
+    <input type="number" name="INTprodstockchange" required><br>
 
     <label>Action (Add/Remove):</label>
     <select name="STRaction" required>

@@ -1,0 +1,183 @@
+/* Apply Poppins font to the table */
+table {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #f9f9f9; /* Background color for the whole table */
+    border: 1px solid #ddd; /* Optional: Add a border around the table */
+    border-radius: 0; /* No rounded corners */
+}
+
+/* Styling for both th and td cells */
+th, td {
+    padding: 12px 15px;
+    text-align: center; /* Align all content to the center */
+}
+
+/* Styling for the header row */
+thead {
+    background-color: #f2f2f2;
+}
+
+thead tr {
+    border-bottom: 3px solid #333; /* Black bar at the bottom of the header */
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    font-size: 16px; /* Default font size for header */
+}
+
+/* Styling for the table body (making text smaller) */
+tbody td {
+    font-size: 14px; /* Smaller font size for the table body */
+}
+
+/* Add bars to body rows */
+tbody tr {
+    position: relative;
+}
+
+tbody tr::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+}
+
+/* Container for the whole table, header, and buttons */
+.table-container {
+    width: 100%;
+    max-width: 1200px; /* Adjust max-width as needed */
+    margin: 0 auto; /* Centers the content horizontally */
+    padding: 20px; /* Add padding around the container */
+}
+
+/* Header with Text and Buttons */
+.header-container {
+    display: flex; /* Use Flexbox for alignment */
+    justify-content: space-between; /* Space out the text and buttons */
+    align-items: center; /* Vertically center-align items */
+    margin-bottom: 20px; /* Add spacing below */
+}
+
+/* Header text styling */
+.header-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333; /* Dark gray for contrast */
+}
+
+/* Styling for button group */
+.button-group {
+    display: flex; /* Use Flexbox to control layout */
+    justify-content: flex-end; /* Align items to the right */
+    gap: 10px; /* Add spacing between buttons */
+    margin-top: 20px; /* Optional: Add spacing above the group */
+}
+
+/* Button Styles */
+.Import-order, .Export-excel, .Add-product, .Delete-product {
+  background: transparent;
+  color: #6930C3;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #EFA23D;
+  border-width: 1px;
+
+  width: 200px; /* Fixed width */
+  height: 50px; /* Fixed height */
+  white-space: nowrap; /* Prevents wrapping of text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 10px;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.Import-order:hover, .Export-excel:hover, .Add-product:hover, .Delete-product:hover {
+  color: #EFA23D; /* Text color on hover */
+  border-color: #6930C3; /* Border color on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    /* Adjust the table to fit smaller screens */
+    table {
+        font-size: 14px; /* Reduce the font size */
+    }
+
+    /* Stack the header and button group on smaller screens */
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .button-group {
+        justify-content: flex-start;
+        margin-top: 15px;
+    }
+
+    .Import-order, .Export-excel, .Add-product, .Delete-product {
+        width: 100%; /* Make buttons full-width on smaller screens */
+        max-width: 200px; /* Limit the width of buttons */
+        height: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* On mobile screens, make the buttons stack vertically */
+    .button-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .Import-order, .Export-excel, .Add-product, .Delete-product {
+        width: 100%; /* Full width for buttons on mobile */
+        height: 40px;
+        margin-bottom: 10px; /* Add spacing between buttons */
+    }
+
+    /* Adjust the font size further for smaller screens */
+    .header-text {
+        font-size: 18px;
+    }
+
+    /* Reduce table padding for smaller screens */
+    th, td {
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* On extra small screens (phones), adjust the header font size */
+    .header-text {
+        font-size: 16px;
+    }
+
+    .table-container {
+        padding: 10px; /* Reduce the padding */
+    }
+
+    /* Further reduce font size for table cells */
+    th, td {
+        font-size: 12px;
+    }
+
+    /* Reduce the height of the buttons */
+    .Import-order, .Export-excel, .Add-product, .Delete-product {
+        height: 35px;
+    }
+}
