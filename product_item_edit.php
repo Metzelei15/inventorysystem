@@ -1,5 +1,12 @@
 <?php include_once('dbconn.php')?>
-<?php include('product_item_edit_query.php')?>
+<?php include('product_item_edit_query.php');
+	if (isset($_SESSION['role'])){
+		if($_SESSION['role']!='admin'){
+			echo "<script>alert('Admin Only');</script>";
+			echo "<script>document.location.href='staffhomepage.php';</script>";
+		}
+	}	
+?>
 <html>
 <head>
 	<title>Add a new Product</title>
