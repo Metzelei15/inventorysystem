@@ -7,14 +7,12 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     try {
-        //Prepare the query to join `account` and `account role` tables
         $query = "
             SELECT `INTaccntid`, `INTroleid`
             FROM `account`
             WHERE `STRusername` = :username AND `STRpassword` = :password
         ";
 
-        //Use prepared statements to prevent SQL injection
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
@@ -25,7 +23,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
             $_SESSION["role"] = $row['INTroleid'];
             $_SESSION["accntid"] = $row['INTaccntid'];
-
             if ($row['INTroleid'] == '1') {
                 $_SESSION["role"] = "admin";
                 header("Location: staffhomepage.php");
@@ -67,13 +64,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
       <div class="input-div">
         <label for="password">Password*</label>
         <input type="password" id="password" name="password" placeholder="Minimum 8 characters" required>
-      </div>
-
-      <div class="checkbox-group">
-        <label>
-          <input type="checkbox" id="remember-me" name="remember-me"><span class="remember-text"> Remember Me</span>
-        </label>
-        
       </div>
 
       <button type="submit" class="Login"> 

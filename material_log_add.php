@@ -1,5 +1,6 @@
 <?php include ('dbconn.php');
 include_once('session_handling.php');?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +44,6 @@ include_once('session_handling.php');?>
             ?>
         </select><br>
     </div>
-
     <div class="form-group">
         <label>Stock Change:</label>
         <input type="number" name="INTmatstockchange" min="1" placeholder="Quantity" required><br>
@@ -57,10 +57,8 @@ include_once('session_handling.php');?>
         </select><br>
     </div>
 
-
     <button class="submitjm" type="submit"> Submit </button>
     </form>
-
 </div>
 </div>
 </body>

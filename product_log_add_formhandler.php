@@ -1,10 +1,12 @@
 <?php
 require_once 'dbconn.php';
+include_once('session_handling.php');
 
 if (isset($_POST['INTprodid'], $_POST['INTprodstockchange'], $_POST['STRaction'])) {
     $INTprodid = (int)$_POST['INTprodid'];
     $INTprodstockchange = (int)$_POST['INTprodstockchange'];
     $STRaction = $_POST['STRaction'];
+    $INTaccntid = $_SESSION["accntid"];
 
     try {
         $conn->beginTransaction();
@@ -27,12 +29,13 @@ if (isset($_POST['INTprodid'], $_POST['INTprodstockchange'], $_POST['STRaction']
             throw new Exception("Stock cannot go below zero.");
         }
 
-        $insertQuery = "INSERT INTO productstockslog (INTprodid, INTprodstockchange, STRaction, DTproddtlog) 
-                        VALUES (:INTprodid, :INTprodstockchange, :STRaction, NOW())";
+        $insertQuery = "INSERT INTO productstockslog (INTprodid, INTprodstockchange, STRaction, DTproddtlog, INTaccntid) 
+                        VALUES (:INTprodid, :INTprodstockchange, :STRaction, NOW(), :INTaccntid)";
         $insertStmt = $conn->prepare($insertQuery);
         $insertStmt->bindParam(':INTprodid', $INTprodid, PDO::PARAM_INT);
         $insertStmt->bindParam(':INTprodstockchange', $INTprodstockchange, PDO::PARAM_INT);
         $insertStmt->bindParam(':STRaction', $STRaction, PDO::PARAM_STR);
+        $insertStmt->bindParam(':INTaccntid', $INTaccntid, PDO::PARAM_INT);
         $insertStmt->execute();
 
         $updateQuery = "UPDATE producttable SET INTprodquan = :newStock WHERE INTprodid = :INTprodid";
