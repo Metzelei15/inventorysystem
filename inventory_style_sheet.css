@@ -47,6 +47,25 @@
     border-radius: 16px;
 }
 
+.sidebar ul li button {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 15px;
+    transition: background-color 0.5s;
+    border-radius: 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+}
+
+.sidebar ul li button:hover {
+    background: linear-gradient(to bottom left, rgba(242, 171, 209, 1) 0%, rgba(106, 149, 222, 1) 100%);
+    transition: 0.7s;
+    color: #101540;
+    border-radius: 16px;
+}
+
 /* Main Content Styling */
 .main-content {
     margin-left: 250px; /* Adjust to the sidebar width */
