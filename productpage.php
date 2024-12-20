@@ -1,4 +1,7 @@
-<?php include('dbconn.php')?>
+<?php 
+	include('dbconn.php');
+	include_once('session_handling.php');
+?>
 <?php 
 	$query = "SELECT * FROM producttable";
 	try {
@@ -30,7 +33,6 @@
             <li><a href="#">Logout</a></li>
         </ul>
     </div>
-
     <div class="main-content-container">
     <div class="main-content">
 	<div class="table-container">
@@ -41,7 +43,6 @@
 			    <button class="Add-product" onclick="document.location='product_item_add.php'"> Add New Product </button>
 			    <button class="Add-product" onclick="document.location='product_log_page.php'"> Product Logs </button>
 			    <button class="Add-product" onclick="document.location='product_log_add.php'"> Add New log </button>
-				
 			</div>
 		</div>
 

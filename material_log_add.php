@@ -1,4 +1,5 @@
-<?php include ('dbconn.php');?>
+<?php include ('dbconn.php');
+include_once('session_handling.php');?>
 <!DOCTYPE html>
 <html>
 <head>

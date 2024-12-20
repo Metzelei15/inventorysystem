@@ -1,9 +1,5 @@
 <?php include('dbconn.php');
-    if (!isset($_SESSION["role"])){
-		echo "<script>document.location.href = 'login.php'</script>";
-	} else if ($_SESSION["role"]=="admin"){
-		echo "<script>document.location.href = 'adminhomepage.php'</script>";
-	}
+include_once('session_handling.php');
 ?>
 
 <?php 

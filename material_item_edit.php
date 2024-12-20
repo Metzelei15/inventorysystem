@@ -1,5 +1,6 @@
 <?php include_once('dbconn.php')?>
-<?php include('material_item_edit_query.php')?>
+<?php include('material_item_edit_query.php');
+include_once('session_handling.php');?>
 <html>
 <head>
 	<title>Add New Material</title>

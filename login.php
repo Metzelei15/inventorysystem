@@ -26,13 +26,12 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION["role"] = $row['INTroleid'];
             $_SESSION["accntid"] = $row['INTaccntid'];
 
-            //Redirect based on role
             if ($row['INTroleid'] == '1') {
                 $_SESSION["role"] = "admin";
-                echo "<script>document.location.href='adminhomepage.php';</script>";
-            } elseif ($row['INTroleid'] == '2') {
+                header("Location: staffhomepage.php");
+            } else if ($row['INTroleid'] == '2') {
                 $_SESSION["role"] = "staff";
-                echo "<script>document.location.href='staffhomepage.php';</script>";
+                header("Location: staffhomepage.php");
             }
         } else {
             echo "<script>alert('Invalid username or password');</script>";
@@ -82,13 +81,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
       </button>
     </form>
     <div class="Header-login">
-    
-  </div>
-  </div>
-  <?php
+    <?php
     if (isset($_POST['username']) && isset($_POST['password']) && isset($stmt) && $stmt->rowCount() === 0) {
         echo "<div class='error-message'>Invalid username or password. Please try again.</div>";
     }
     ?>
+  </div>
+  </div>
+  
 </body>
 </html>

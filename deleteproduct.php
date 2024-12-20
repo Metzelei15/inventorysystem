@@ -1,18 +1,10 @@
 <?php
 include('dbconn.php');
-session_start();
+include_once('session_handling.php');
 
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-if (!isset($_SESSION["role"])) {
-    echo "<script>document.location.href = 'login.php'</script>";
-    exit;
-} else if ($_SESSION["role"] == "admin") {
-    echo "<script>document.location.href = 'adminhomepage.php'</script>";
-    exit;
-}
 
 $accntid = isset($_SESSION['accntid']) ? $_SESSION['accntid'] : null;
 

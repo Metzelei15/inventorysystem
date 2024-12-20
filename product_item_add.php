@@ -1,4 +1,12 @@
-<?php include_once('dbconn.php')?>
+<?php include_once('dbconn.php');
+	include_once('session_handling.php');
+	if (isset($_SESSION['role'])){
+		if($_SESSION['role']!='admin'){
+			echo "<script>alert('Admin Only');</script>";
+			echo "<script>document.location.href='staffhomepage.php';</script>";
+		}
+	}
+?>
 
 <html>
 <head>

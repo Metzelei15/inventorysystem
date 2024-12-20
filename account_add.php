@@ -1,4 +1,6 @@
-<?php include_once('dbconn.php')?>
+<?php include_once('dbconn.php');
+include_once('session_handling.php');?>
+	
 <?php 
 	$sql = "SELECT * FROM accountroletable";
 	try {
