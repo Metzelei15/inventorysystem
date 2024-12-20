@@ -1,32 +1,25 @@
 <?php
 include('dbconn.php');
-session_start();
-
-if (!isset($_SESSION["role"])) {
-    echo "<script>document.location.href = 'login.php'</script>";
-    exit;
-}
+include('session_handling.php');
 
 try {
     $createViewQuery = "
         CREATE OR REPLACE VIEW combined_added_view AS
         SELECT 
             'Material' AS RecordType,
-            mat.INTmataddlogid AS LogID,
-            mat.DTmatadded AS DateAdded,
+            mat.INTmatlogid AS LogID,
+            mat.DTmatdtlog AS DateAdded,
             mat.INTmatid AS ItemID,
-            NULL AS CategoryID,
             mat.INTaccntid AS AccountID
-        FROM materialaddedtable mat
+        FROM materialstockslog mat
         UNION ALL
         SELECT 
             'Product' AS RecordType,
-            prod.INTprodaddlogid AS LogID,
-            prod.DTprodaddid AS DateAdded,
+            prod.INTprodlogid AS LogID,
+            prod.DTproddtlog AS DateAdded,
             prod.INtprodid AS ItemID,
-            prod.INTcategoryid AS CategoryID,
             prod.INTaccntid AS AccountID
-        FROM productaddedtable prod;
+        FROM productstockslog prod;
     ";
     $conn->exec($createViewQuery);
 } catch (PDOException $e) {
@@ -82,3 +75,39 @@ if (isset($_GET['report'])) {
     echo "No report type selected.";
 }
 ?>
+
+	
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create New Account</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
+    <link rel="stylesheet" href="inventory_style_sheet.css">
+</head>
+<body>
+
+<div class="sidebar">
+        <div class="logo"><img src="images/Main_logo_3.png" class="logo-mhaine"></div>
+        <ul>
+			<li><a href="../inventorysystem/staffhomepage.php">Home</a></li>
+            <li><a href="../inventorysystem/productpage.php">Products</a></li>
+            <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
+            <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
+            <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
+            <form><button type='submit' name='logout' class="logout-button">Logout</button></form>
+        </ul>
+    </div>
+
+    <div class="main-content-container">
+    <div class="main-content">
+	<h2 class="form-header">Select Option</h2>
+
+        <form action='reportgeneration.php' method='GET'>
+            <input type='submit' name='report' value='Today'>
+            <input type='submit' name='report' value='Week'>
+            <input type='submit' name='report' value='Month'>
+        </form>
+	</div>
+	</div>
+</body>
+</html>

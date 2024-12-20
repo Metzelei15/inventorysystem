@@ -1,11 +1,7 @@
 <?php 
 	include('dbconn.php');
 	include_once('session_handling.php');
-	if ($_SESSION["role"]!="staff"){
-		header("Location: login.php");
-		session_unset();
-		session_destroy();
-	}
+
 	if (isset($_GET['section'])) {
 		echo "You have clicked on the " . $_GET['section'] . " section.";
 	}
@@ -16,22 +12,16 @@
 	<title>Staff Dashboard</title>
 	<link rel ="stylesheet" href="inventory_style_sheet.css">
 </head>
-<?php
-	if (isset($_POST["logout"])){
-		session_unset();
-		session_destroy();
-		echo "<script>document.location.href = 'login.php';</script>";
-	}
-?>
 <body>
 <div class="sidebar">
         <div class="logo"><img src="images/Main_logo_3.png" class="logo-mhaine"></div>
         <ul>
+			<li><a href="../inventorysystem/staffhomepage.php">Home</a></li>
             <li><a href="../inventorysystem/productpage.php">Products</a></li>
             <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
             <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
             <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
-            <button type='submit' name='logout' class="logout-button">Logout</button>
+            <form><button type='submit' name='logout' class="logout-button">Logout</button></form>
         </ul>
     </div>
     <div id="content">

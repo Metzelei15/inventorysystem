@@ -1,4 +1,10 @@
 <?php
+if (isset($_SESSION['role'])){
+	if($_SESSION['role']!='admin'){
+		echo "<script>alert('Admin Only');</script>";
+		echo "<script>document.location.href='staffhomepage.php';</script>";
+	}
+}
 if (isset($_GET['deleteID'])) {
     $INTaccntid = $_GET['deleteID'];
     try {
