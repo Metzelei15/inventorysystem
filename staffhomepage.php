@@ -25,13 +25,13 @@
 ?>
 <body>
 <div class="sidebar">
-        <div class="logo"><img src="images/Main_logo_2.png" class="logo-mhaine"></div>
+        <div class="logo"><img src="images/Main_logo_3.png" class="logo-mhaine"></div>
         <ul>
             <li><a href="../inventorysystem/productpage.php">Products</a></li>
             <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
             <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
             <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
-            <li><button type='submit' name='logout'>Logout</button></li>
+            <button type='submit' name='logout' class="logout-button">Logout</button>
         </ul>
     </div>
     <div id="content">
