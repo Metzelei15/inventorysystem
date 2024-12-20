@@ -10,6 +10,8 @@ try {
             mat.INTmatlogid AS LogID,
             mat.DTmatdtlog AS DateAdded,
             mat.INTmatid AS ItemID,
+            mat.INTmatstockchange AS ChangeInQuantity,
+            mat.STRaction AS TypeOfChange,
             mat.INTaccntid AS AccountID
         FROM materialstockslog mat
         UNION ALL
@@ -18,6 +20,8 @@ try {
             prod.INTprodlogid AS LogID,
             prod.DTproddtlog AS DateAdded,
             prod.INtprodid AS ItemID,
+            prod.INTprodstockchange AS ChangeInQuantity,
+            prod.STRaction AS TypeOfChange,
             prod.INTaccntid AS AccountID
         FROM productstockslog prod;
     ";
