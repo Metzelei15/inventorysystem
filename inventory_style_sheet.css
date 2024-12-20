@@ -572,3 +572,14 @@ option:hover {
     
 }
 
+.stats {
+    width: 80%; /* Adjust width to 80% of the screen */
+    max-width: 1200px; /* Limit the maximum width */
+    margin: 40px auto; /* Center the container horizontally with some margin */
+    padding: 20px;
+    background-color: #fff; /* Light background */
+    border-radius: 16px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for subtle elevation */
+    box-sizing: border-box;
+    text-align: center; /* Center the content inside */
+}
