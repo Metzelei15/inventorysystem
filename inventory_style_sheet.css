@@ -583,3 +583,68 @@ option:hover {
     box-sizing: border-box;
     text-align: center; /* Center the content inside */
 }
+
+.today-button, .week-button, .month-button
+{
+  background: #101540;
+  color: rgba(241, 241, 241, 0.815);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);
+  font-family: 'Poppins';
+  font-size: 30px;
+
+  border-radius: 5px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  
+
+  padding: 20px 15px;
+  white-space: nowrap;
+  display: table-row;
+  align-items: center;
+  justify-content: center;
+  
+  margin-left: 3rem;
+  margin-top: 0.5em;
+
+  
+  cursor: pointer;
+}
+
+.today-button:hover, .week-button:hover, .month-button:hover
+{
+  background: #1a74c4;
+  color: #101540;
+}
+
+.form-container
+{
+    margin-left: 15.5em;
+    border: 1px white;
+    border-style: solid;
+}
+
+.form-header
+{
+    margin-left: 10.3em;
+    font-size: 40px;
+}
+
+hr {
+    border: none; /* Removes default styling */
+    height: 4px;  /* Line thickness */
+    background-color: black; /* Line color */
+    width: 80%; /* Line width */
+    margin: 20px auto; /* Center alignment */
+}
+
+h2
+{
+    font-family: 'Poppins';
+
+}
+
+.ul-material, .ul-product
+{
+    list-style: none;
+}

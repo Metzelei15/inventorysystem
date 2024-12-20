@@ -49,6 +49,7 @@
 <head>
     <title>Staff Dashboard</title>
     <link rel ="stylesheet" href="inventory_style_sheet.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
 </head>
 <body>
 <div class="sidebar">
@@ -64,33 +65,43 @@
 </div>
 <div id="content" class="stats">
     <div>
+
         <div class="card">
             <h2>Total Materials</h2>
             <p><?= htmlspecialchars($totalMaterials); ?></p>
         </div>
+
+        <hr>
         <div class="card">
             <h2>Total Products</h2>
             <p><?= htmlspecialchars($totalProducts); ?></p>
         </div>
-    </div>
-
+        </div>
+        </hr>   
+    
+        <hr>
     <h2>Low Stock Items</h2>
+    </hr> 
+
+   
     <div class="low-stock">
         <h3>Materials</h3>
-        <ul>
+        <ul class ="ul-material">
             <?php foreach ($lowStockMaterials as $material): ?>
                 <li><?= htmlspecialchars($material['STRmatname']) ?> - Quantity: <?= htmlspecialchars($material['INTmatquan']) ?></li>
             <?php endforeach; ?>
         </ul>
         <h3>Products</h3>
-        <ul>
+        <ul class ="ul-product">
             <?php foreach ($lowStockProducts as $product): ?>
                 <li><?= htmlspecialchars($product['STRprodname']) ?> - Quantity: <?= htmlspecialchars($product['INTprodquan']) ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
-
+    
+    <hr>
     <h2>Stock Levels</h2>
+    </hr> 
     <canvas id="stockChart"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

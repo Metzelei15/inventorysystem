@@ -101,12 +101,13 @@ if (isset($_GET['report'])) {
     <div class="main-content-container">
     <div class="main-content">
 	<h2 class="form-header">Select Option</h2>
-
+    <div class="form-container">
         <form action='reportgeneration.php' method='GET'>
-            <input type='submit' name='report' value='Today'>
-            <input type='submit' name='report' value='Week'>
-            <input type='submit' name='report' value='Month'>
+            <button class="today-button" input type='submit' name='report' value='Today'>Today</button>
+            <button class="week-button" input type='submit' name='report' value='Week'>Week</button>
+            <button class="month-button" input type='submit' name='report' value='Month'>Month</button>
         </form>
+    </div>
 	</div>
 	</div>
 </body>
