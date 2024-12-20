@@ -1,0 +1,526 @@
+/* Sidebar Styling */
+.sidebar {
+    height: 100vh; /* Full screen height */
+    width: 200px; /* Fixed sidebar width */
+    background: linear-gradient(to bottom, rgba(242, 171, 209, 1) 0%, rgba(106, 149, 222, 1) 100%);
+    position: fixed; /* Sidebar stays fixed */
+    top: 0;
+    left: 0;
+    padding-top: 30px;
+    padding-left: 10px;
+    box-sizing: border-box;
+    z-index: 100; /* Ensure sidebar stays above the content */
+        font-family: 'Poppins', sans-serif; /* Apply the Poppins font to the sidebar */
+    color: #fff; /* White text for links */
+}
+
+/* Sidebar Menu Links */
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+/* Main Content Styling */
+.main-content {
+    margin-left: 250px; /* Adjust to the sidebar width */
+    padding: 20px; /* Add padding inside the box */
+    width: calc(100% - 270px); /* Adjust for the sidebar width and margin */
+    box-sizing: border-box; /* Include padding in width calculation */
+    background: linear-gradient(to bottom, rgba(242, 171, 209, 1) 0%, rgba(106, 149, 222, 1) 100%);
+
+    border: 1px solid #ddd; /* Light gray border for the box */
+    border-radius: 0px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+}
+
+/* Main Content Box Container */
+.main-content-container {
+    padding: 20px; /* Add space around the content box */
+    margin: 20px; /* Add some margin around the content container */
+    background-color: #f9f9f9; /* Slight background color to contrast with the box */
+    border-radius: 12px; /* Optional: Rounded corners for the container */
+    box-sizing: border-box; /* Ensure the margin and padding are included in the width */
+}
+
+
+/* Container for the whole table, header, and buttons */
+.table-container {
+    width: 100%;
+    max-width: 1200px; /* Adjust max-width as needed */
+    margin: 0 auto; /* Centers the content horizontally */
+    padding: 20px; /* Add padding around the container */
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+    background-color: #f9f9f9; /* Light background for the container */
+    border-radius: 0px; /* Optional: Rounded corners */
+    border: 1px solid #ddd; /* Optional: Add border to the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Soft shadow around the container */
+}
+
+/* Header with Text and Buttons */
+.header-container {
+    display: flex; /* Use Flexbox for alignment */
+    justify-content: space-between; /* Space out the text and buttons */
+    align-items: center; /* Vertically center-align items */
+    margin-bottom: 20px; /* Add spacing below */
+}
+
+/* Header text styling */
+.header-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+    color: #333; /* Dark gray for contrast */
+}
+
+/* Styling for button group */
+.button-group {
+    display: flex; /* Use Flexbox to control layout */
+    justify-content: flex-end; /* Align items to the right */
+    gap: 10px; /* Add spacing between buttons */
+    margin-top: 20px; /* Optional: Add spacing above the group */
+}
+
+/* Button Styles */
+.Import-order, .Export-excel, .Add-product, .Delete-product {
+  background: transparent;
+  color: #6930C3;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #EFA23D;
+  border-width: 1px;
+
+  width: 200px; /* Fixed width */
+  height: 50px; /* Fixed height */
+  white-space: nowrap; /* Prevents wrapping of text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 10px;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.Import-order:hover, .Export-excel:hover, .Add-product:hover, .Delete-product:hover {
+  color: #EFA23D; /* Text color on hover */
+  border-color: #6930C3; /* Border color on hover */
+}
+
+/* Table Styling */
+table {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #f9f9f9; /* Background color for the whole table */
+    border: 0px solid #ddd; /* Optional: Add a border around the table */
+    border-radius: 0; /* No rounded corners */
+}
+
+/* Styling for both th and td cells */
+th, td {
+    padding: 12px 15px;
+    text-align: center; /* Align all content to the center */
+}
+
+/* Styling for the header row */
+thead {
+    background-color: #f2f2f2;
+}
+
+thead tr {
+    border-bottom: 3px solid #333; /* Black bar at the bottom of the header */
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    font-size: 20px; /* Default font size for header */
+}
+
+/* Styling for the table body (making text smaller) */
+tbody td {
+    font-size: 14px; /* Smaller font size for the table body */
+}
+
+/* Add bars to body rows */
+tbody tr {
+    position: relative;
+}
+
+tbody tr::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+}
+
+/* Link Styling for Links Inside the Table */
+table a {
+    display: inline-block; /* Make the link behave like a button */
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    padding: 8px 15px; /* Adjust padding to make it button-like */
+    text-decoration: none; /* Remove underline */
+    text-align: center; /* Center the text */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 14px; /* Adjust font size */
+    font-family: 'Poppins', sans-serif; /* Use the same font */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Hover effect to darken the background */
+table a:hover {
+    background-color: #218838; /* Darker green */
+    transform: scale(1.05); /* Slightly increase size */
+}
+
+/* Optional: Focus effect for accessibility */
+table a:focus {
+    outline: none; /* Remove the outline */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on focus */
+}
+
+/* Optional: Style for disabled links (if any) */
+table a.disabled {
+    background-color: #ccc; /* Light gray background */
+    color: #888; /* Gray text */
+    cursor: not-allowed; /* Show a not-allowed cursor */
+}
+
+table a.disabled:hover {
+    background-color: #ccc; /* Disable hover effect */
+    transform: none; /* Remove hover scaling */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }   
+
+    .main-content {
+        margin-left: 200px; /* Adjust for smaller sidebar */
+        width: calc(100% - 220px);
+    }
+
+    .table-container {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 150px;
+    }
+
+    .main-content {
+        margin-left: 150px; /* Adjust for smaller sidebar */
+        width: calc(100% - 170px);
+    }
+
+    .table-container {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100px;
+    }
+
+    .main-content {
+        margin-left: 100px; /* Adjust for mobile sidebar */
+        width: calc(100% - 120px);
+    }
+
+    .table-container {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
+
+/* Styling for the form container */
+.form-container {
+    width: 100%;
+    max-width: 600px; /* Set maximum width */
+    margin: 0 auto; /* Center the form container */
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background color */
+    border: 1px solid #ddd; /* Border for the form */
+    border-radius: 8px; /* Rounded corners */
+    box-sizing: border-box;
+}
+
+/* Styling for the form header */
+.form-header {
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Styling for each form group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Label styling */
+.form-group label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Input field styling */
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Textarea specific styling */
+.form-group textarea {
+    resize: vertical;
+    min-height: 250px; /* Minimum height for the textarea */
+}
+
+/* Button styling */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+.submit-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 15px; /* Reduced padding on smaller screens */
+    }
+
+    .form-header {
+        font-size: 20px; /* Smaller font size for header */
+    }
+
+    .form-group input, .form-group textarea {
+        font-size: 12px; /* Smaller font size for inputs */
+    }
+
+    .submit-btn {
+        font-size: 14px; /* Smaller font size for the button */
+    }
+}
+
+.submitjm
+{
+  background: rgba(16,21,64,255);
+  color: rgba(241, 241, 241, 1);
+  font-family: 'Poppins';
+  font-size: 16px;
+
+  border-radius: 5px;
+  border-style: none;
+  border-color: gray;
+  border-width: 1px;
+
+  min-width: 135px;
+  min-height: 25px;
+  padding: 10px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 10px;
+
+  cursor: pointer;
+}
+
+.submitjm:hover
+{
+  background: #610099;
+}
+
+/* Styling for select dropdown */
+select {
+    width: 100%; /* Full width of its container */
+    padding: 12px;
+    font-size: 14px; /* Adjust font size */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+    cursor: pointer; /* Pointer cursor for the dropdown */
+    appearance: none; /* Remove default appearance on modern browsers */
+    -webkit-appearance: none; /* Remove default appearance on Safari */
+    -moz-appearance: none; /* Remove default appearance on Firefox */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Styling for the select dropdown when focused (clicked) */
+select:focus {
+    border-color: #6930C3; /* Border color on focus */
+    background-color: #fff; /* White background on focus */
+    outline: none; /* Remove default focus outline */
+}
+
+/* Add a custom dropdown arrow */
+select::after {
+    content: "▼"; /* Custom down arrow */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Ensure the arrow doesn't block clicks */
+}
+
+/* Optional: Add hover effect to the dropdown */
+select:hover {
+    border-color: #EFA23D; /* Change border color on hover */
+    background-color: #f4f4f4; /* Slightly darker background on hover */
+}
+
+/* Option styling */
+option {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Change background color of options on hover */
+option:hover {
+    background-color: #f2f2f2; /* Slightly darker gray on hover */
+}
+
+/* Styling for the dropdown within the form (optional, for context) */
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Responsive Search Bar Styling */
+.search-bar {
+    display: flex; /* Align input and button horizontally */
+    align-items: center;
+    width: 100%; /* Full width */
+    max-width: 600px; /* Limit the maximum width */
+    margin: 0 auto; /* Center horizontally */
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font to the container */
+}
+
+/* Search Input Field */
+.search-bar input[type="text"] {
+    flex: 1; /* Take up available space */
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font to the input field */
+    border: none;
+    border-radius: 5px;
+    background-color: #fff; /* White background */
+    color: #333; /* Dark text color */
+    box-sizing: border-box; /* Include padding in width calculation */
+    outline: none; /* Remove default outline */
+    margin-right: 10px; /* Space between input and button */
+}
+
+/* Focus Effect for Search Input */
+.search-bar input[type="text"]:focus {
+    border: 2px solid #6930C3; /* Highlight the border */
+    background-color: #f4f4f4; /* Change background color when focused */
+}
+
+/* Search Button Styling */
+.search-bar button {
+    background-color: rgba(107,150,222,255); /* Purple background */
+    color: #fff; /* White text */
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font to the button */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex; /* Align icon and text horizontally */
+    align-items: center;
+    gap: 5px; /* Space between icon and text */
+}
+
+/* Search Button Hover Effect */
+.search-bar button:hover {
+    background-color: rgba(241,171,210,255); /* Orange background on hover */
+}
+
+/* Search Icon Styling */
+.search-bar .search-icon {
+    font-size: 18px; /* Adjust size */
+    font-family: 'Poppins', sans-serif; /* Optional: Apply Poppins font to the icon */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .search-bar {
+        max-width: 100%; /* Remove max-width restriction */
+        padding: 5px; /* Adjust padding */
+    }
+
+    .search-bar input[type="text"] {
+        font-size: 14px; /* Smaller text size */
+    }
+
+    .search-bar button {
+        font-size: 14px; /* Smaller text size */
+        padding: 8px; /* Adjust padding */
+    }
+}

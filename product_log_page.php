@@ -2,15 +2,15 @@
 
 try {
     $query = "SELECT 
-        p.STRmatname, 
-        l.INTmatstockchange, 
+        p.STRprodname, 
+        l.INTprodstockchange, 
         l.STRaction, 
-        l.DTmatdtlog, 
-        l.INTmatlogid
+        l.DTproddtlog, 
+        l.INTprodlogid
     FROM 
-        materialstockslog l
+        productstockslog l
     JOIN 
-        materialtable p ON l.INTmatid = p.INTmatid";
+        producttable p ON l.INTprodid = p.INTprodid";
 
     $stmt = $conn->prepare($query);
     $stmt->execute();
@@ -24,7 +24,7 @@ try {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Material Logs</title>
+    <title>Product Logs</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
     <link rel="stylesheet" href="inventory_style_sheet.css">
 </head>
@@ -46,33 +46,33 @@ try {
     <div class="main-content">
     <div class="table-container">
         <div class="header-container">
-        <span class="header-text">Material Log</span>
+        <span class="header-text">Product Logs</span>
             <div class="button-group">
-                <button class="Add-product" onclick="document.location='materialpage.php'"> Material List </button>
-                <button class="Add-product" onclick="document.location='material_item_add.php'"> Add Material </button>
-                <button class="Add-product" onclick="document.location='material_search.php'"> Search Material </button>
-                <button class="Add-product" onclick="document.location='material_log_add.php'"> Add New log </button>
+                <button class="Add-product" onclick="document.location='productpage.php'"> Product List </button>
+                <button class="Add-product" onclick="document.location='product_item_add.php'"> Add Product </button>
+                <button class="Add-product" onclick="document.location='product_search.php'"> Product Search </button>
+                <button class="Add-product" onclick="document.location='product_log_add.php'"> Add New Log </button>
             </div>
         </div>
 
     <?php if (count($logs) > 0): ?>
         <table>
             <tr>
-                <th>Material Name</th>
+                <th>Product Name</th>
                 <th>Stock Change</th>
                 <th>Action</th>
                 <th>Date</th>
             </tr>
         <?php foreach ($logs as $row): ?>
             <tr>
-                <td><?php echo htmlspecialchars($row['STRmatname']); ?></td>
-                <td><?php echo htmlspecialchars($row['INTmatstockchange']); ?></td>
+                <td><?php echo htmlspecialchars($row['STRprodname']); ?></td>
+                <td><?php echo htmlspecialchars($row['INTprodstockchange']); ?></td>
                 <td><?php echo htmlspecialchars($row['STRaction']); ?></td>
-                <td><?php echo htmlspecialchars($row['DTmatdtlog']); ?></td>
+                <td><?php echo htmlspecialchars($row['DTproddtlog']); ?></td>
             </tr>
         <?php endforeach; ?>
         </table>
-
+        
     <?php else: ?>
         <p>No stock logs found.</p>
     <?php endif; ?>

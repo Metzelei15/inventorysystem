@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Material  Add Log</title>
+	<title>Product Add Log</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
     <link rel = "stylesheet" href = "inventory_style_sheet.css">
 </head>
@@ -23,41 +23,40 @@
     <div class="main-content-container">
     <div class="main-content">
 
-    <h2 class="form-header">Add Material Logs</h2>
+    <h2 class="form-header">Add Product Logs</h2>
 
-	<form action="material_log_add_formhandler.php" method="POST">
+	<form action="product_log_add_formhandler.php" method="POST">
 
     <div class="form-group">
-    <label>Material Name</label>
-        <select name="INTmatid" required>
+        <label>Product Name</label>
+        <select name="INTprodid" required>
             <?php
-    	        $query = "SELECT INTmatid, STRmatname FROM materialtable";
+    	        $query = "SELECT INTprodid, STRprodname FROM producttable";
     	        $stmt = $conn->prepare($query);
     	        $stmt->execute();
-    	        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	        $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    	        foreach ($products as $row) {
-    	            echo "<option value='{$row['INTmatid']}'>{$row['STRmatname']}</option>";
+    	        foreach ($materials as $material) {
+    	            echo "<option value='{$material['INTprodid']}'> {$material['STRprodname']}</option>";
     	        }
             ?>
         </select><br>
     </div>
 
     <div class="form-group">
-        <label>Stock Change:</label>
-        <input type="number" name="INTmatstockchange" min="1" placeholder="Quantity" required><br>
+        <label>Stock Change</label>
+        <input type="number" name="INTprodstockchange" min="1" placeholder="Quantity" required><br>
     </div>
 
     <div class="form-group">
-        <label>Action (Add/Remove):</label>
+        <label>Action (Add/Remove)</label>
         <select name="STRaction" required>
             <option value="Add">Add</option>
             <option value="Remove">Remove</option>
         </select><br>
     </div>
 
-
-    <button class="submitjm" type="submit"> Submit </button>
+    <button class="submitjm" type="submit" >Submit</button>
     </form>
 
 </div>

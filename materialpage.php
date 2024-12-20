@@ -14,38 +14,67 @@
 <html>
 <head>
 	<title>Material</title>
-	<style>
-		table, th, td {
-			border: 1px solid;
-		}
-	</style>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
+	<link rel = "stylesheet" href = "inventory_style_sheet.css">
 </head>
 <body>
+
+	<div class="sidebar">
+        <div class="logo">Logo</div>
+        <ul>
+            <li><a href="../inventorysystem/adminhomepage.php">Home</a></li>
+            <li><a href="../inventorysystem/productpage.php">Products</a></li>
+            <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
+            <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
+            <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content-container">
+    <div class="main-content">
+	<div class="table-container">
+		<div class="header-container">
+	    <span class="header-text">Material List</span>
+			<div class="button-group">
+				<button class="Add-product" onclick="document.location='material_search.php'"> Search Material </button>
+				<button class="Add-product" onclick="document.location='material_item_add.php'"> Add Material </button>
+				<button class="Add-product" onclick="document.location='material_log_page.php'"> Material Log </button>
+				<button class="Add-product" onclick="document.location='material_log_add.php'"> Add New log </button>
+			</div>
+		</div>
+
 	<?php
 		if($result > 0) {
 			echo "<table>
-					<tr><th>MATERIAL ID
-					</th><th>NAME
-					</th><th>DESCRIPTION
-					</th><th>QUANTITY
-					</th><th>EDIT
-					</th><th>DELETE
-					</th></tr>";
-					// output data of each row
-					foreach($result as $row) {?>
-						<tr>
-				    		<td><?php echo htmlspecialchars($row["INTmatid"]); ?></td>
-		                    <td><?php echo htmlspecialchars($row["STRmatname"]); ?></td>
-		                    <td><?php echo htmlspecialchars($row["STRmatdesc"]); ?></td>
-		                    <td><?php echo htmlspecialchars($row["INTmatquan"]); ?></td>
-				    		<td> <a href="../inventorysystem/material_item_edit.php?editID=<?php echo $row["INTmatid"] ?>"> Edit </a></td>
-				    		<td> <a href="../inventorysystem/material_item_delete_formhandler.php?deleteID=<?php echo $row["INTmatid"] ?>"> Delete </a></td>
-				    	</tr>
-				<?php	}
+			<tr>
+				<th>MATERIAL ID
+				</th><th>NAME
+				</th><th>DESCRIPTION
+				</th><th>QUANTITY
+				</th><th>EDIT
+				</th><th>DELETE
+				</th>
+			</tr>";
+			
+			foreach($result as $row) {?>
+			<tr>
+			    <td><?php echo htmlspecialchars($row["INTmatid"]); ?></td>
+				<td><?php echo htmlspecialchars($row["STRmatname"]); ?></td>
+				<td><?php echo htmlspecialchars($row["STRmatdesc"]); ?></td>
+				<td><?php echo htmlspecialchars($row["INTmatquan"]); ?></td>
+				<td><a href="../inventorysystem/material_item_edit.php?editID=<?php echo $row["INTmatid"] ?>"> Edit </a></td>
+				<td><a href="../inventorysystem/material_item_delete_formhandler.php?deleteID=<?php echo $row["INTmatid"] ?>"> Delete </a></td>
+			</tr>
+			<?php	}
 			echo "</table>";
+
 		}else{
 			echo "0 results";
 		}
 	?>
+	</div>
+	</div>
+	</div>
 </body>
 </html>

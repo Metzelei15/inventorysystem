@@ -3,24 +3,22 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	$STRmatname = htmlspecialchars($_POST["STRmatname"]);
 	$STRmatdesc = htmlspecialchars($_POST["STRmatdesc"]);
-	$INTmatquan = htmlspecialchars($_POST["INTmatquan"]);
 	try {
 		require_once "dbconn.php";
-		$query = "INSERT INTO materialtable(STRmatname, STRmatdesc, INTmatquan) 
-								VALUES(:STRmatname,:STRmatdesc,:INTmatquan);";
+		$query = "INSERT INTO materialtable(STRmatname, STRmatdesc) 
+								VALUES(:STRmatname,:STRmatdesc);";
 
 		$stmt = $conn->prepare($query);
 
 		$stmt ->bindParam(":STRmatname", $STRmatname);
 		$stmt ->bindParam(":STRmatdesc", $STRmatdesc);
-		$stmt ->bindParam(":INTmatquan", $INTmatquan);
 
 		$stmt->execute();
 
 		$conn = null;
 		$stmt = null;
 
-		header("Location: ../inventorysystem/material_item_add.php");
+		header("Location: ../inventorysystem/materialpage.php");
 
 		die();
 
@@ -28,5 +26,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			die("Query failed: " . $e->getMessage());
 		}
 	} else {
-		header("Location: ../inventorysystem/material_item_add.php");
+		header("Location: ../inventorysystem/materialpage.php");
 	}
