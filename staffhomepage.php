@@ -60,7 +60,7 @@
         <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
         <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
         <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
-
+        <form><button type='submit' name='logout' class="logout-button">Logout</button></form>
     </ul>
 </div>
 <div id="content" class="stats">
