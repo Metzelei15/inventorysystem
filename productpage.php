@@ -1,6 +1,7 @@
 <?php 
 	include('dbconn.php');
 	include_once('session_handling.php');
+	$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 ?>
 <?php 
 	$query = "SELECT * FROM producttable";
@@ -63,7 +64,7 @@
 		                    <td><?php echo htmlspecialchars($row["STRproddesc"]); ?></td>
 		                    <td><?php echo htmlspecialchars($row["INTprodquan"]); ?></td>
 				    		<td> <a href="../inventorysystem/product_item_edit.php?editID=<?php echo $row["INTprodid"] ?> " class="table-button"> Edit </a></td>
-				    		<td> <a href="../inventorysystem/product_item_delete_formhandler.php?deleteID=<?php echo $row["INTprodid"] ?>" class="table-button"> Delete </a></td>
+				    		<td> <a href="<?php echo $isAdmin ? '../inventorysystem/product_item_delete_formhandler.php?deleteID=' . $row["INTprodid"] : 'javascript:void(0)'; ?>"class="table-button"<?php echo !$isAdmin ? 'style="pointer-events: none; color: gray;"' : ''; ?>>Delete</a></td>
 				    	</tr>
 
 					<?php }

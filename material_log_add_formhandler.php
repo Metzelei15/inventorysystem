@@ -1,11 +1,13 @@
 <?php
 require_once 'dbconn.php';
 include_once('session_handling.php');
+
 if (isset($_POST['INTmatid'], $_POST['INTmatstockchange'], $_POST['STRaction'])) {
     $INTmatid = (int)$_POST['INTmatid'];
     $INTmatstockchange = (int)$_POST['INTmatstockchange'];
     $STRaction = $_POST['STRaction'];
     $INTaccntid = $_SESSION["accntid"];
+
     try {
         $conn->beginTransaction();
 
@@ -47,14 +49,12 @@ if (isset($_POST['INTmatid'], $_POST['INTmatstockchange'], $_POST['STRaction']))
         exit;
 
     } catch (Exception $e) {
-
         $conn->rollBack();
-        header("Location: ../inventorysystem/material_log_page.php?status=error");
-        exit;
+        die("Error: " . $e->getMessage());   
     }
 
 } else {
     header("Location: ../inventorysystem/material_log_page.php?status=invalid_input");
-    exit;
+    die("Invalid input.");
 }
 ?>

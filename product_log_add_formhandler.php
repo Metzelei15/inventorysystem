@@ -46,17 +46,15 @@ if (isset($_POST['INTprodid'], $_POST['INTprodstockchange'], $_POST['STRaction']
 
         $conn->commit();
         echo "Stock log added successfully.";
-        header("Location: ../inventorysystem/product_log_page.php");
+        header("Location: ../inventorysystem/product_log_page.php?status=success");
 
     } catch (Exception $e) {
         $conn->rollBack();
-        
-        header("Location: ../inventorysystem/product_log_page.php");
-        die("Error: " . $e->getMessage());    
+        die("Error: " . $e->getMessage());  
     }
 
 } else {
-    header("Location: ../inventorysystem/product_log_page.php");
+    header("Location: ../inventorysystem/product_log_page.php?status=invalid-input");
     die("Invalid input.");
 }
 ?>

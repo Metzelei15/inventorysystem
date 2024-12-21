@@ -129,9 +129,7 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true,
-						min: 0, 
-                   	 	max: 1000,
+                        beginAtZero: true
                     }
                 }
             }

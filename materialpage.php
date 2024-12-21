@@ -1,4 +1,8 @@
-<?php include('dbconn.php')?>
+<?php 
+	include('dbconn.php');
+	include_once('session_handling.php');
+	$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+?>
 <?php 
 	$query = "SELECT * FROM materialtable";
 	try {
@@ -64,7 +68,7 @@
 				<td><?php echo htmlspecialchars($row["STRmatdesc"]); ?></td>
 				<td><?php echo htmlspecialchars($row["INTmatquan"]); ?></td>
 				<td><a href="../inventorysystem/material_item_edit.php?editID=<?php echo $row["INTmatid"] ?>"> Edit </a></td>
-				<td><a href="../inventorysystem/material_item_delete_formhandler.php?deleteID=<?php echo $row["INTmatid"] ?>"> Delete </a></td>
+				<td> <a href="<?php echo $isAdmin ? '../inventorysystem/material_item_delete_formhandler.php?deleteID=' . $row["INTmatid"] : 'javascript:void(0)'; ?>"class="table-button"<?php echo !$isAdmin ? 'style="pointer-events: none; color: gray;"' : ''; ?>>Delete</a></td>
 			</tr>
 			<?php	}
 			echo "</table>";
