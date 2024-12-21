@@ -97,11 +97,11 @@
         </div>
 
         <hr>
+        <h2>Product Stock Levels</h2>
+        <canvas id="productStockChart"></canvas>
         <h2>Material Stock Levels</h2>
         <canvas id="materialStockChart"></canvas>
         <hr>
-        <h2>Product Stock Levels</h2>
-        <canvas id="productStockChart"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
