@@ -28,105 +28,124 @@
 
     $conn = null;
 
-    $chartData = [
+    $materialChartData = [
         'labels' => [],
-        'materialQuantities' => [],
-        'productQuantities' => [],
+        'quantities' => [],
     ];
 
     foreach ($materialStocks as $material) {
-        $chartData['labels'][] = htmlspecialchars($material['STRmatname']);
-        $chartData['materialQuantities'][] = (int)$material['INTmatquan'];
+        $materialChartData['labels'][] = htmlspecialchars($material['STRmatname']);
+        $materialChartData['quantities'][] = (int)$material['INTmatquan'];
     }
 
+    $productChartData = [
+        'labels' => [],
+        'quantities' => [],
+    ];
+
     foreach ($productStocks as $product) {
-        $chartData['labels'][] = htmlspecialchars($product['STRprodname']);
-        $chartData['productQuantities'][] = (int)$product['INTprodquan'];
+        $productChartData['labels'][] = htmlspecialchars($product['STRprodname']);
+        $productChartData['quantities'][] = (int)$product['INTprodquan'];
     }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Staff Dashboard</title>
-    <link rel ="stylesheet" href="inventory_style_sheet.css">
+    <link rel="stylesheet" href="inventory_style_sheet.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
 </head>
 <body>
-<div class="sidebar">
-    <div class="logo"><img src="images/Main_logo_3.png" class="logo-mhaine"></div>
-    <ul>
-        <li><a href="../inventorysystem/staffhomepage.php">Home</a></li>
-        <li><a href="../inventorysystem/productpage.php">Products</a></li>
-        <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
-        <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
-        <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
-        <form><button type='submit' name='logout' class="logout-button">Logout</button></form>
-    </ul>
-</div>
-<div id="content" class="stats">
-    <div>
+    <div class="sidebar">
+        <div class="logo"><img src="images/Main_logo_3.png" class="logo-mhaine"></div>
+        <ul>
+            <li><a href="../inventorysystem/staffhomepage.php">Home</a></li>
+            <li><a href="../inventorysystem/productpage.php">Products</a></li>
+            <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
+            <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
+            <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
+            <form><button type='submit' name='logout' class="logout-button">Logout</button></form>
+        </ul>
+    </div>
 
+    <div id="content" class="stats">
         <div class="card">
             <h2>Total Materials</h2>
             <p><?= htmlspecialchars($totalMaterials); ?></p>
         </div>
-
         <hr>
         <div class="card">
             <h2>Total Products</h2>
             <p><?= htmlspecialchars($totalProducts); ?></p>
         </div>
-        </div>
-        </hr>   
-    
         <hr>
-    <h2>Low Stock Items</h2>
-    </hr> 
 
-   
-    <div class="low-stock">
-        <h3>Materials</h3>
-        <ul class ="ul-material">
-            <?php foreach ($lowStockMaterials as $material): ?>
-                <li><?= htmlspecialchars($material['STRmatname']) ?> - Quantity: <?= htmlspecialchars($material['INTmatquan']) ?></li>
-            <?php endforeach; ?>
-        </ul>
-        <h3>Products</h3>
-        <ul class ="ul-product">
-            <?php foreach ($lowStockProducts as $product): ?>
-                <li><?= htmlspecialchars($product['STRprodname']) ?> - Quantity: <?= htmlspecialchars($product['INTprodquan']) ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <h2>Low Stock Items</h2>
+        <div class="low-stock">
+            <h3>Materials</h3>
+            <ul class="ul-material">
+                <?php foreach ($lowStockMaterials as $material): ?>
+                    <li><?= htmlspecialchars($material['STRmatname']) ?> - Quantity: <?= htmlspecialchars($material['INTmatquan']) ?></li>
+                <?php endforeach; ?>
+            </ul>
+            <h3>Products</h3>
+            <ul class="ul-product">
+                <?php foreach ($lowStockProducts as $product): ?>
+                    <li><?= htmlspecialchars($product['STRprodname']) ?> - Quantity: <?= htmlspecialchars($product['INTprodquan']) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+        <hr>
+        <h2>Material Stock Levels</h2>
+        <canvas id="materialStockChart"></canvas>
+        <hr>
+        <h2>Product Stock Levels</h2>
+        <canvas id="productStockChart"></canvas>
     </div>
-    
-    <hr>
-    <h2>Stock Levels</h2>
-    </hr> 
-    <canvas id="stockChart"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const chartData = <?php echo json_encode($chartData); ?>;
-        const ctx = document.getElementById('stockChart').getContext('2d');
-        const stockChart = new Chart(ctx, {
+        const materialChartData = <?php echo json_encode($materialChartData); ?>;
+        const materialCtx = document.getElementById('materialStockChart').getContext('2d');
+        const materialStockChart = new Chart(materialCtx, {
             type: 'bar',
             data: {
-                labels: chartData.labels,
+                labels: materialChartData.labels,
                 datasets: [{
                     label: 'Material Stock Quantity',
-                    data: chartData.materialQuantities,
+                    data: materialChartData.quantities,
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
-                }, {
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const productChartData = <?php echo json_encode($productChartData); ?>;
+        const productCtx = document.getElementById('productStockChart').getContext('2d');
+        const productStockChart = new Chart(productCtx, {
+            type: 'bar',
+            data: {
+                labels: productChartData.labels,
+                datasets: [{
                     label: 'Product Stock Quantity',
-                    data: chartData.productQuantities,
+                    data: productChartData.quantities,
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     borderColor: 'rgba(153, 102, 255, 1)',
                     borderWidth: 1
                 }]
             },
             options: {
+                responsive: true,
                 scales: {
                     y: {
                         beginAtZero: true
