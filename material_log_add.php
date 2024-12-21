@@ -1,4 +1,6 @@
-<?php include ('dbconn.php');?>
+<?php include ('dbconn.php');
+include_once('session_handling.php');?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,14 +11,14 @@
 <body>
 
     <div class="sidebar">
-        <div class="logo">Logo</div>
+        <div class="logo"><img src="images/Main_logo_3.png" class="logo-mhaine"></div>
         <ul>
-            <li><a href="../inventorysystem/adminhomepage.php">Home</a></li>
+			<li><a href="../inventorysystem/staffhomepage.php">Home</a></li>
             <li><a href="../inventorysystem/productpage.php">Products</a></li>
             <li><a href="../inventorysystem/materialpage.php">Materials</a></li>
             <li><a href="../inventorysystem/reportgeneration.php">Reports</a></li>
             <li><a href="../inventorysystem/accountpage.php">Accounts</a></li>
-            <li><a href="#">Logout</a></li>
+            <form><button type='submit' name='logout' class="logout-button">Logout</button></form>
         </ul>
     </div>
 
@@ -42,7 +44,6 @@
             ?>
         </select><br>
     </div>
-
     <div class="form-group">
         <label>Stock Change:</label>
         <input type="number" name="INTmatstockchange" min="1" placeholder="Quantity" required><br>
@@ -56,10 +57,8 @@
         </select><br>
     </div>
 
-
     <button class="submitjm" type="submit"> Submit </button>
     </form>
-
 </div>
 </div>
 </body>

@@ -73,9 +73,9 @@ body
   cursor: pointer; 
 }
 
-.login-btn:hover 
+.Login:hover
 {
-  background-color: #0056b3;
+  background: linear-gradient(to right, #cf709f 0%, #1f58b9 100%);
 }
 
 .checkbox-group 
@@ -140,7 +140,12 @@ h2
 .img-holder
 {
   width: 65%;
-  margin-top: 65px;
+  margin-top: 45px;
   float: right;
 }
 
+.login-div
+{
+  margin-left: 75px;
+  margin-top: 75px;
+}

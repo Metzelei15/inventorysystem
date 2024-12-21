@@ -1,36 +1,51 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $STRusername = htmlspecialchars($_POST["STRusername"]);
+    $STRpassword = htmlspecialchars($_POST["STRpassword"]);
+    $STRfirstname = htmlspecialchars($_POST["STRfirstname"]);
+    $STRlastname = htmlspecialchars($_POST["STRlastname"]);
+    $INTroleid = htmlspecialchars($_POST["INTroleid"]);
+    try {
+        require_once "dbconn.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-	$STRusername = htmlspecialchars($_POST["STRusername"]);
-	$STRpassword = htmlspecialchars($_POST["STRpassword"]);
-	$STRfirstname = htmlspecialchars($_POST["STRfirstname"]);
-	$STRlastname = htmlspecialchars($_POST["STRlastname"]);
-	$INTroleid = htmlspecialchars($_POST["INTroleid"]);
-	try {
-		require_once "dbconn.php";
-		$query = "INSERT INTO account(STRusername, STRpassword, STRfirstname, STRlastname, INTroleid) 
-								VALUES(:STRusername, :STRpassword, :STRfirstname, :STRlastname, :INTroleid);";
+        $checkQuery = "SELECT COUNT(*) FROM account WHERE STRusername = :STRusername";
+        $checkStmt = $conn->prepare($checkQuery);
+        $checkStmt->bindParam(":STRusername", $STRusername);
+        $checkStmt->execute();
+        $count = $checkStmt->fetchColumn();
 
-		$stmt = $conn->prepare($query);
+        if ($count > 0) {
+            //Username already exists
+            $conn = null;
+            $checkStmt = null;
+            header("Location: ../inventorysystem/accountpage.php?error=UserExists");
+            exit();
+        }
 
-		$stmt ->bindParam(":STRusername", $STRusername);
-		$stmt ->bindParam(":STRpassword", $STRpassword);
-		$stmt ->bindParam(":STRfirstname", $STRfirstname);
-		$stmt ->bindParam(":STRlastname", $STRlastname);
-		$stmt ->bindParam(":INTroleid", $INTroleid);
+        $query = "INSERT INTO account(STRusername, STRpassword, STRfirstname, STRlastname, INTroleid) 
+                  VALUES(:STRusername, :STRpassword, :STRfirstname, :STRlastname, :INTroleid)";
 
-		$stmt->execute();
+        $stmt = $conn->prepare($query);
 
-		$conn = null;
-		$stmt = null;
+        $stmt->bindParam(":STRusername", $STRusername);
+        $stmt->bindParam(":STRpassword", $STRpassword);
+        $stmt->bindParam(":STRfirstname", $STRfirstname);
+        $stmt->bindParam(":STRlastname", $STRlastname);
+        $stmt->bindParam(":INTroleid", $INTroleid);
 
-		header("Location: ../inventorysystem/account_new_add.php");
+        $stmt->execute();
 
-		die();
+        $conn = null;
+        $stmt = null;
 
-		} catch (PDOException $e) {
-			die("Query failed: " . $e->getMessage());
-		}
-	} else {
-		header("Location: ../inventorysystem/category_new_add.php");
-	}
+        header("Location: ../inventorysystem/accountpage.php?success=AccountCreated");
+        exit();
+
+    } catch (PDOException $e) {
+        die("Query failed: " . $e->getMessage());
+    }
+} else {
+    header("Location: ../inventorysystem/category_new_add.php");
+    exit();
+}
+?>

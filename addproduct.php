@@ -1,14 +1,6 @@
 <?php
 include('dbconn.php');
-session_start();
-
-if (!isset($_SESSION["role"])) {
-    echo "<script>document.location.href = 'login.php'</script>";
-    exit;
-} else if ($_SESSION["role"] == "admin") {
-    echo "<script>document.location.href = 'adminhomepage.php'</script>";
-    exit;
-}
+include_once('session_handling.php');
 
 $accntid = isset($_SESSION['accntid']) ? $_SESSION['accntid'] : null;
 

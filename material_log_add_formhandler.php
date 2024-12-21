@@ -1,11 +1,11 @@
 <?php
 require_once 'dbconn.php';
-
+include_once('session_handling.php');
 if (isset($_POST['INTmatid'], $_POST['INTmatstockchange'], $_POST['STRaction'])) {
     $INTmatid = (int)$_POST['INTmatid'];
     $INTmatstockchange = (int)$_POST['INTmatstockchange'];
     $STRaction = $_POST['STRaction'];
-
+    $INTaccntid = $_SESSION["accntid"];
     try {
         $conn->beginTransaction();
 
@@ -27,12 +27,13 @@ if (isset($_POST['INTmatid'], $_POST['INTmatstockchange'], $_POST['STRaction']))
             throw new Exception("Stock cannot go below zero.");
         }
 
-        $insertQuery = "INSERT INTO materialstockslog (INTmatid, INTmatstockchange, STRaction, DTmatdtlog) 
-                        VALUES (:INTmatid, :INTmatstockchange, :STRaction, NOW())";
+        $insertQuery = "INSERT INTO materialstockslog (INTmatid, INTmatstockchange, STRaction, DTmatdtlog, INTaccntid) 
+                        VALUES (:INTmatid, :INTmatstockchange, :STRaction, NOW(), :INTaccntid)";
         $insertStmt = $conn->prepare($insertQuery);
         $insertStmt->bindParam(':INTmatid', $INTmatid, PDO::PARAM_INT);
         $insertStmt->bindParam(':INTmatstockchange', $INTmatstockchange, PDO::PARAM_INT);
         $insertStmt->bindParam(':STRaction', $STRaction, PDO::PARAM_STR);
+        $insertStmt->bindParam(':INTaccntid', $INTaccntid, PDO::PARAM_INT);
         $insertStmt->execute();
 
         $updateQuery = "UPDATE materialtable SET INTmatquan = :newStock WHERE INTmatid = :INTmatid";
@@ -42,18 +43,18 @@ if (isset($_POST['INTmatid'], $_POST['INTmatstockchange'], $_POST['STRaction']))
         $updateStmt->execute();
 
         $conn->commit();
-        echo "Material stock log added successfully.";
-        header("Location: ../inventorysystem/material_log_page.php");
+        header("Location: ../inventorysystem/material_log_page.php?status=success");
+        exit;
 
     } catch (Exception $e) {
-        $conn->rollBack();
 
-        header("Location: ../inventorysystem/material_log_page.php");
-        die("Error: " . $e->getMessage());
+        $conn->rollBack();
+        header("Location: ../inventorysystem/material_log_page.php?status=error");
+        exit;
     }
 
 } else {
-    header("Location: ../inventorysystem/material_log_page.php");
-    die("Invalid input.");
+    header("Location: ../inventorysystem/material_log_page.php?status=invalid_input");
+    exit;
 }
 ?>
